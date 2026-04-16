@@ -1,700 +1,1849 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Abu Hena Md. Shalimullah | Flutter Developer</title>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:ital,wght@0,300;0,400;0,600;0,800;1,300&display=swap" rel="stylesheet"/>
-<style>
-:root {
-  --g1: #0a1f0a;
-  --g2: #0d2b0d;
-  --g3: #122e12;
-  --g4: #1a3d1a;
-  --lime: #8bc34a;
-  --lime2: #aed581;
-  --lime3: #c5e1a5;
-  --neon: #69f069;
-  --dark: #061006;
-  --card: rgba(13,43,13,0.85);
-  --border: rgba(139,195,74,0.2);
-  --border2: rgba(139,195,74,0.4);
-  --text: #e8f5e9;
-  --muted: #81a878;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--dark);color:var(--text);font-family:'Exo 2',sans-serif;overflow-x:hidden;cursor:none;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abu Hena Md. Shalimullah | Flutter Developer Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js for Statistics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* CURSOR */
-.cursor{width:10px;height:10px;background:var(--lime);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;mix-blend-mode:screen;}
-.cursor-ring{width:32px;height:32px;border:1.5px solid var(--lime);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;opacity:0.6;}
+        :root {
+            --primary: #a855f7;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --dark: #050505;
+            --light: #ffffff;
+        }
 
-/* BG LAYERS */
-body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(139,195,74,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(139,195,74,0.04) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:0;}
-.orb{position:fixed;border-radius:50%;pointer-events:none;filter:blur(100px);z-index:0;}
-.orb1{width:700px;height:700px;background:rgba(45,80,22,0.18);top:-200px;left:-200px;animation:orb1 12s ease-in-out infinite;}
-.orb2{width:500px;height:500px;background:rgba(26,61,26,0.15);bottom:-100px;right:-100px;animation:orb2 14s ease-in-out infinite;}
-.orb3{width:300px;height:300px;background:rgba(105,240,105,0.05);top:40%;left:40%;animation:orb1 9s ease-in-out infinite reverse;}
-@keyframes orb1{0%,100%{transform:translate(0,0)}50%{transform:translate(80px,50px)}}
-@keyframes orb2{0%,100%{transform:translate(0,0)}50%{transform:translate(-60px,-80px)}}
+        html {
+            scroll-behavior: smooth;
+        }
 
-.scroll-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--lime),var(--neon));z-index:9999;}
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #050505 0%, #1a1a2e 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:linear-gradient(135deg,rgba(10,31,10,0.92),rgba(6,27,6,0.92));backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0.7rem 0;box-shadow:0 2px 20px rgba(45,80,22,0.4);}
-.nav-inner{max-width:1100px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;color:var(--lime);text-decoration:none;letter-spacing:0.08em;}
-.nav-logo .br{color:var(--muted);}
-nav ul{list-style:none;display:flex;gap:0.3rem;}
-nav ul a{font-family:'Rajdhani',sans-serif;font-size:0.82rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:0.4rem 0.9rem;border-radius:4px;transition:all 0.3s;}
-nav ul a:hover{color:var(--lime);background:rgba(139,195,74,0.08);}
-.ham{display:none;background:none;border:1px solid var(--border);color:var(--lime);padding:6px 10px;font-size:1.1rem;cursor:none;border-radius:4px;}
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
 
-/* HERO */
-#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;overflow:hidden;padding:120px 2rem 80px;background:linear-gradient(135deg,var(--g1) 0%,#051005 100%);}
-.hero-wrap{max-width:1100px;width:100%;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1;}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(139,195,74,0.1);border:1px solid var(--border2);padding:6px 16px;border-radius:30px;font-family:'Rajdhani',sans-serif;font-size:0.78rem;font-weight:600;color:var(--lime);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:22px;}
-.hero-badge .dot{width:7px;height:7px;background:var(--neon);border-radius:50%;animation:blink 1.5s step-end infinite;box-shadow:0 0 8px var(--neon);}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-.hero-name{font-family:'Rajdhani',sans-serif;font-size:clamp(2.4rem,5vw,4rem);font-weight:700;line-height:1.08;margin-bottom:18px;}
-.hero-name .green{color:var(--lime);text-shadow:0 0 30px rgba(139,195,74,0.4);}
-.hero-role{font-family:'Rajdhani',sans-serif;font-size:1rem;color:var(--muted);letter-spacing:0.2em;text-transform:uppercase;font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:10px;}
-.hero-role::before{content:'';width:40px;height:1px;background:var(--lime);}
-.hero-desc{color:rgba(232,245,233,0.7);line-height:1.8;font-size:0.95rem;margin-bottom:36px;max-width:480px;}
-.hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
-.btn-g{padding:13px 30px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:0.85rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;border:none;cursor:none;transition:all 0.3s;display:inline-flex;align-items:center;gap:6px;border-radius:4px;}
-.btn-solid{background:linear-gradient(135deg,#8bc34a 0%,#558b2f 100%);color:#0a1f0a;box-shadow:0 4px 20px rgba(139,195,74,0.3);}
-.btn-solid:hover{background:linear-gradient(135deg,#9dd44e 0%,#689f38 100%);transform:translateY(-3px);box-shadow:0 8px 30px rgba(139,195,74,0.5);}
-.btn-outline{background:transparent;border:1.5px solid var(--border2);color:var(--lime);}
-.btn-outline:hover{background:rgba(139,195,74,0.1);border-color:var(--lime);transform:translateY(-3px);}
+        p {
+            color: #d1d5db;
+            line-height: 1.8;
+        }
 
-/* HERO VISUAL */
-.hero-visual{display:flex;align-items:center;justify-content:center;position:relative;}
-.hex-container{position:relative;width:300px;height:300px;}
-.hex-ring{position:absolute;inset:0;border:2px solid transparent;border-top-color:var(--lime);border-right-color:var(--lime2);border-radius:50%;animation:spin 8s linear infinite;}
-.hex-ring2{position:absolute;inset:20px;border:1px solid transparent;border-bottom-color:rgba(139,195,74,0.4);border-left-color:rgba(139,195,74,0.2);border-radius:50%;animation:spin 12s linear infinite reverse;}
-@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.hex-inner{position:absolute;inset:35px;background:linear-gradient(135deg,#0d2b0d 0%,#0a1f0a 100%);border:1px solid var(--border2);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(139,195,74,0.15),inset 0 0 40px rgba(0,0,0,0.3);}
-.hex-init{font-family:'Rajdhani',sans-serif;font-size:4.5rem;font-weight:700;background:linear-gradient(135deg,var(--lime),var(--neon));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
-.hex-label{font-family:'Rajdhani',sans-serif;font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);}
-.ftag{position:absolute;background:linear-gradient(135deg,rgba(13,43,13,0.95),rgba(10,31,10,0.95));border:1px solid var(--border2);padding:8px 14px;border-radius:30px;font-family:'Rajdhani',sans-serif;font-size:0.75rem;font-weight:600;color:var(--lime2);letter-spacing:0.1em;box-shadow:0 4px 15px rgba(139,195,74,0.2);white-space:nowrap;}
-.ft1{top:20px;left:-30px;animation:flt 3.5s ease-in-out infinite;}
-.ft2{bottom:70px;right:-40px;animation:flt 3.5s 1.2s ease-in-out infinite;}
-.ft3{bottom:10px;left:10px;animation:flt 3.5s 2.2s ease-in-out infinite;}
-@keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+        /* ========== NAVBAR ========== */
+        .navbar-custom {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+            z-index: 1000;
+            padding: 12px 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
 
-/* SECTIONS */
-section{position:relative;z-index:1;padding:90px 2rem;}
-.sec-inner{max-width:1100px;margin:0 auto;}
-.sec-tag{font-family:'Rajdhani',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--lime);margin-bottom:10px;display:flex;align-items:center;gap:12px;}
-.sec-tag::before{content:'';width:35px;height:1px;background:var(--lime);}
-.sec-title{font-family:'Rajdhani',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;margin-bottom:12px;line-height:1.1;}
-.sec-title .hl{color:var(--lime);}
+        .navbar-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.16,1,0.3,1);}
-.reveal.vis{opacity:1;transform:translateY(0);}
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(20px, 4vw, 28px);
+            font-weight: 900;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
 
-/* ABOUT */
-#about{background:linear-gradient(180deg,var(--dark) 0%,var(--g1) 100%);}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;margin-top:40px;}
-.about-text p{color:rgba(232,245,233,0.7);line-height:1.85;margin-bottom:18px;font-size:0.95rem;}
-.info-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px;}
-.info-c{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--lime);padding:14px 18px;border-radius:6px;transition:all 0.3s;}
-.info-c:hover{border-left-color:var(--lime2);transform:translateX(4px);box-shadow:0 4px 20px rgba(139,195,74,0.12);}
-.info-clabel{font-family:'Rajdhani',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
-.info-cval{font-size:0.88rem;font-weight:600;color:var(--text);}
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px;}
-.stat-box{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--lime);padding:18px 14px;text-align:center;border-radius:6px;transition:transform 0.3s,box-shadow 0.3s;}
-.stat-box:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(139,195,74,0.15);}
-.stat-num{font-family:'Rajdhani',sans-serif;font-size:2rem;font-weight:700;color:var(--lime);line-height:1;}
-.stat-label{font-family:'Rajdhani',sans-serif;font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-top:5px;}
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: clamp(20px, 3vw, 40px);
+            align-items: center;
+        }
 
-.skill-panel{background:linear-gradient(135deg,rgba(13,43,13,0.8),rgba(10,31,10,0.8));border:1px solid var(--border);border-radius:12px;padding:32px;box-shadow:0 8px 30px rgba(0,0,0,0.3);}
-.skill-row{margin-bottom:24px;}
-.skill-row:last-child{margin-bottom:0;}
-.skill-meta{display:flex;justify-content:space-between;font-family:'Rajdhani',sans-serif;font-size:0.78rem;font-weight:600;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;}
-.skill-track{height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
-.skill-fill{height:100%;background:linear-gradient(90deg,var(--lime),var(--neon));width:0%;transition:width 1.6s cubic-bezier(0.16,1,0.3,1);border-radius:2px;box-shadow:0 0 10px rgba(105,240,105,0.4);}
+        .nav-link {
+            color: #d1d5db;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: clamp(12px, 1.5vw, 14px);
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+        }
 
-.codebox{background:#060e06;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:20px;}
-.codebox-bar{background:var(--g2);padding:10px 16px;display:flex;gap:7px;align-items:center;border-bottom:1px solid var(--border);}
-.cbar-dot{width:10px;height:10px;border-radius:50%;}
-.cbar-dot:nth-child(1){background:#ff5f57}.cbar-dot:nth-child(2){background:#febc2e}.cbar-dot:nth-child(3){background:#28c840}
-.cbar-title{font-family:'Rajdhani',sans-serif;font-size:0.7rem;color:var(--muted);margin-left:8px;letter-spacing:0.1em;}
-.codebox-body{padding:20px;font-family:'Courier New',monospace;font-size:0.78rem;line-height:2;}
-.cc{color:#3d6e3d}.ck{color:#8bc34a}.cs{color:#a5d6a7}.cn{color:#ffcc80}.co{color:#e6db74}.cb{color:#ce93d8}
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #a855f7, #ec4899);
+            transition: width 0.3s ease;
+        }
 
-/* SKILLS */
-#skills{background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 100%);}
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;margin-top:50px;}
-.sk-card{background:var(--card);border:1px solid var(--border);padding:24px 16px;text-align:center;border-radius:8px;transition:all 0.35s cubic-bezier(0.16,1,0.3,1);cursor:default;position:relative;overflow:hidden;}
-.sk-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:0;background:linear-gradient(135deg,rgba(139,195,74,0.12),rgba(105,240,105,0.06));transition:height 0.4s ease;}
-.sk-card:hover::before{height:100%;}
-.sk-card:hover{border-color:var(--lime2);transform:translateY(-8px);box-shadow:0 15px 40px rgba(139,195,74,0.2);}
-.sk-icon{font-size:2rem;margin-bottom:10px;display:block;position:relative;z-index:1;}
-.sk-name{font-family:'Rajdhani',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);position:relative;z-index:1;transition:color 0.3s;}
-.sk-card:hover .sk-name{color:var(--lime);}
+        .nav-link:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
 
-/* EXPERIENCE */
-#experience{background:linear-gradient(180deg,var(--g2) 0%,var(--g1) 100%);}
-.timeline{margin-top:50px;position:relative;padding-left:36px;max-width:800px;}
-.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--lime),rgba(139,195,74,0.1));border-radius:2px;}
-.tl-item{position:relative;margin-bottom:44px;}
-.tl-dot{position:absolute;left:-43px;top:8px;width:14px;height:14px;border:2px solid var(--lime);background:var(--dark);border-radius:50%;box-shadow:0 0 0 4px rgba(139,195,74,0.15);}
-.tl-dot::after{content:'';position:absolute;inset:3px;background:var(--lime);border-radius:50%;animation:blink 2.5s ease-in-out infinite;}
-.tl-date{font-family:'Rajdhani',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--lime);margin-bottom:8px;}
-.tl-card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--lime);padding:24px 28px;border-radius:8px;transition:all 0.3s;}
-.tl-card:hover{border-left-color:var(--lime2);transform:translateX(6px);box-shadow:0 8px 30px rgba(139,195,74,0.15);}
-.tl-title{font-family:'Rajdhani',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:5px;color:var(--text);}
-.tl-org{font-family:'Rajdhani',sans-serif;font-size:0.8rem;color:var(--lime);font-weight:600;letter-spacing:0.1em;margin-bottom:12px;}
-.tl-desc{color:rgba(232,245,233,0.65);font-size:0.9rem;line-height:1.7;}
+        .nav-link:hover::after {
+            width: 100%;
+        }
 
-/* ACHIEVEMENTS */
-#achievements{background:linear-gradient(135deg,#051005 0%,var(--g1) 100%);}
-.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px;margin-top:50px;}
-.ach-card{background:var(--card);border:1px solid var(--border);padding:32px 26px;border-radius:10px;transition:all 0.35s cubic-bezier(0.16,1,0.3,1);position:relative;overflow:hidden;}
-.ach-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--lime),var(--neon));transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease;}
-.ach-card:hover::before{transform:scaleX(1);}
-.ach-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(139,195,74,0.2);border-color:var(--border2);}
-.ach-icon{font-size:2.5rem;margin-bottom:18px;display:block;}
-.ach-title{font-family:'Rajdhani',sans-serif;font-size:1.15rem;font-weight:700;margin-bottom:10px;color:var(--lime);}
-.ach-desc{color:rgba(232,245,233,0.65);font-size:0.88rem;line-height:1.7;}
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
 
-/* CONTACT */
-#contact{background:linear-gradient(180deg,var(--g1) 0%,var(--dark) 100%);}
-.contact-center{max-width:650px;margin:0 auto;text-align:center;}
-.contact-mail{display:inline-block;font-family:'Rajdhani',sans-serif;font-size:clamp(1.1rem,3vw,1.7rem);font-weight:700;color:var(--lime);text-decoration:none;margin:36px 0;position:relative;letter-spacing:0.05em;}
-.contact-mail::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--lime),var(--neon));transform:scaleX(0);transform-origin:right;transition:transform 0.4s ease;}
-.contact-mail:hover::after{transform:scaleX(1);transform-origin:left;}
-.contact-desc{color:var(--muted);font-size:0.95rem;line-height:1.8;margin-bottom:36px;}
-.socials{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
-.social-btn{border:1px solid var(--border);padding:10px 22px;font-family:'Rajdhani',sans-serif;font-size:0.78rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-radius:30px;transition:all 0.3s;background:rgba(139,195,74,0.04);}
-.social-btn:hover{color:var(--lime);border-color:var(--lime2);background:rgba(139,195,74,0.12);transform:translateY(-4px);box-shadow:0 8px 20px rgba(139,195,74,0.15);}
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #a855f7;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
 
-/* FOOTER */
-footer{position:relative;z-index:1;background:linear-gradient(135deg,var(--g2),var(--g1));border-top:1px solid var(--border);padding:28px 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-.ft-logo{font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;color:var(--lime);}
-.ft-copy{font-family:'Rajdhani',sans-serif;font-size:0.75rem;color:var(--muted);letter-spacing:0.1em;}
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
 
-/* WAVE */
-.wave-div{position:relative;z-index:1;line-height:0;}
-.wave-div svg{display:block;width:100%;}
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
 
-/* MOBILE */
-@media(max-width:900px){
-  .hero-wrap{grid-template-columns:1fr;gap:50px;text-align:center;}
-  .hero-role{justify-content:center;}
-  .hero-desc{margin:0 auto 36px;}
-  .hero-btns{justify-content:center;}
-  .hero-visual{justify-content:center;}
-  .about-grid{grid-template-columns:1fr;gap:40px;}
-  .info-cards{grid-template-columns:1fr;}
-  footer{flex-direction:column;text-align:center;}
-  nav ul{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(10,31,10,0.98);padding:1rem;border-bottom:1px solid var(--border);gap:0.2rem;}
-  nav ul.open{display:flex;}
-  .ham{display:block;}
-}
-@media(max-width:480px){
-  section{padding:70px 1.2rem;}
-  .hex-container{width:240px;height:240px;}
-  .hex-init{font-size:3.5rem;}
-  .stats-row{grid-template-columns:repeat(3,1fr);}
-}
-</style>
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 60px;
+                flex-direction: column;
+                background: rgba(5, 5, 5, 0.98);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                gap: 0;
+                border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+                padding: 20px 0;
+                max-height: calc(100vh - 60px);
+                overflow-y: auto;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-link {
+                padding: 12px 0;
+                display: block;
+                font-size: 14px;
+            }
+
+            .nav-link::after {
+                display: none;
+            }
+
+            .nav-link:hover {
+                background: rgba(168, 85, 247, 0.1);
+                color: #a855f7;
+            }
+        }
+
+        /* ========== BACKGROUND EFFECTS ========== */
+        .blob {
+            position: fixed;
+            opacity: 0.15;
+            filter: blur(120px);
+            z-index: -1;
+            border-radius: 50%;
+            animation: blobFloat 20s ease-in-out infinite;
+        }
+
+        .blob-1 {
+            width: clamp(300px, 50vw, 700px);
+            height: clamp(300px, 50vw, 700px);
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            top: -100px;
+            left: -100px;
+        }
+
+        .blob-2 {
+            width: clamp(250px, 40vw, 600px);
+            height: clamp(250px, 40vw, 600px);
+            background: linear-gradient(135deg, #06b6d4, #a855f7);
+            bottom: -50px;
+            right: -50px;
+            animation-delay: 5s;
+        }
+
+        @keyframes blobFloat {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(30px, -30px); }
+            50% { transform: translate(-20px, 20px); }
+            75% { transform: translate(10px, -20px); }
+        }
+
+        /* ========== LOADER ========== */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 5, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .loader.hidden {
+            animation: fadeOut 0.5s ease-in-out forwards;
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                visibility: visible;
+            }
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .progress-bar-loader {
+            width: clamp(150px, 60vw, 250px);
+            height: 4px;
+            background: rgba(168, 85, 247, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-loader::after {
+            content: '';
+            display: block;
+            height: 100%;
+            background: linear-gradient(90deg, #a855f7, #ec4899, #06b6d4);
+            animation: progress 2.5s ease-in-out;
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        /* ========== GENERAL STYLES ========== */
+        .gradient-text {
+            background: #57C785;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        section {
+            padding: clamp(50px, 10vh, 100px) clamp(15px, 5vw, 40px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .container-custom {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: clamp(10px, 2vh, 20px);
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: clamp(0.95rem, 2vw, 1.2rem);
+            color: #9ca3af;
+            text-align: center;
+            margin-bottom: clamp(30px, 5vh, 60px);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(80px, 15vh, 120px) clamp(15px, 5vw, 40px) clamp(40px, 8vh, 60px);
+            margin-top: 60px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(30px, 5vw, 60px);
+            align-items: center;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: clamp(25px, 4vw, 40px);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 6vw, 4.5rem);
+            line-height: 1.2;
+            margin-bottom: clamp(15px, 2vh, 25px);
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: #06b6d4;
+            margin-bottom: clamp(20px, 3vh, 30px);
+        }
+
+        .hero p {
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            max-width: 600px;
+            margin-bottom: clamp(25px, 4vh, 40px);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: clamp(12px, 2vw, 20px);
+            flex-wrap: wrap;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: clamp(10px, 1.5vh, 14px) clamp(20px, 3vw, 32px);
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: clamp(12px, 1.2vw, 14px);
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #a855f7;
+            border: 2px solid #a855f7;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(168, 85, 247, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 3s ease-in-out infinite;
+            margin-top: -50px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: clamp(250px, 90vw, 400px);
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(168, 85, 247, 0.3);
+            border: 2px solid rgba(168, 85, 247, 0.2);
+        }
+
+        /* ========== ABOUT SECTION ========== */
+        .about-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 15px;
+            padding: clamp(20px, 3vw, 30px);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .about-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(168, 85, 247, 0.4);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.2);
+        }
+
+        .about-card h3 {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: #06b6d4;
+            margin-bottom: 12px;
+        }
+
+        .about-card p {
+            font-size: clamp(0.9rem, 1.2vw, 1rem);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(clamp(200px, 90vw, 280px), 1fr));
+            gap: clamp(20px, 3vw, 30px);
+            margin-top: clamp(30px, 5vh, 50px);
+        }
+
+        /* ========== EXPERIENCE SECTION ========== */
+        .experience-item {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.05));
+            border-left: 4px solid #a855f7;
+            border-radius: 12px;
+            padding: clamp(20px, 3vw, 30px);
+            margin-bottom: clamp(20px, 3vh, 30px);
+            transition: all 0.3s ease;
+        }
+
+        .experience-item:hover {
+            transform: translateX(10px);
+            border-left-color: #ec4899;
+            box-shadow: 0 15px 40px rgba(168, 85, 247, 0.2);
+        }
+
+        .experience-year {
+            color: #06b6d4;
+            font-weight: 700;
+            font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+            margin-bottom: 8px;
+        }
+
+        .experience-title {
+            color: #a855f7;
+            font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .experience-desc {
+            font-size: clamp(0.9rem, 1.1vw, 1rem);
+            line-height: 1.8;
+        }
+
+        /* ========== SKILLS SECTION ========== */
+        .skill-card {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.1));
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 12px;
+            padding: clamp(18px, 3vw, 25px);
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.3);
+        }
+
+        .skill-icon {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            color: #a855f7;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover .skill-icon {
+            transform: rotateY(360deg) scale(1.2);
+            color: #ec4899;
+        }
+
+        .skill-card h3 {
+            font-size: clamp(1rem, 1.5vw, 1.1rem);
+            color: #06b6d4;
+            margin-bottom: 8px;
+        }
+
+        .skill-card p {
+            font-size: clamp(0.85rem, 1vw, 0.95rem);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(clamp(180px, 90vw, 220px), 1fr));
+            gap: clamp(15px, 2.5vw, 24px);
+        }
+
+        /* ========== STATS SECTION ========== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(clamp(150px, 90vw, 250px), 1fr));
+            gap: clamp(20px, 3vw, 30px);
+            margin-bottom: clamp(40px, 5vh, 60px);
+        }
+
+        .stat-card {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 15px;
+            padding: clamp(20px, 3vw, 30px);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.3);
+        }
+
+        .stat-number {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #06b6d4;
+            font-weight: 600;
+            margin-top: 10px;
+            font-size: clamp(0.9rem, 1.3vw, 1rem);
+        }
+
+        /* ========== CHARTS ========== */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(clamp(280px, 90vw, 400px), 1fr));
+            gap: clamp(20px, 3vw, 40px);
+            margin-top: clamp(30px, 5vh, 50px);
+        }
+
+        .chart-wrapper {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 15px;
+            padding: clamp(20px, 3vw, 30px);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .chart-wrapper:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.2);
+        }
+
+        .chart-title {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: #a855f7;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .chart-canvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* ========== PROJECTS SECTION ========== */
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 60px rgba(168, 85, 247, 0.2);
+        }
+
+        .project-image {
+            width: 100%;
+            height: clamp(180px, 30vh, 250px);
+            background:linear-gradient(135deg, #a855f726, #ec489966);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(2rem, 5vw, 3rem);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-content {
+            padding: clamp(15px, 3vw, 25px);
+        }
+
+        .project-content h3 {
+            font-size: clamp(1rem, 1.8vw, 1.3rem);
+            color: #06b6d4;
+            margin-bottom: 10px;
+        }
+
+        .project-content p {
+            font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+            margin-bottom: 12px;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .project-tag {
+            background: rgba(168, 85, 247, 0.2);
+            color: #06b6d4;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: clamp(0.75rem, 0.9vw, 0.85rem);
+            font-weight: 500;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        /* ========== TESTIMONIALS ========== */
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 15px;
+            padding: clamp(20px, 3vw, 30px);
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(168, 85, 247, 0.4);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.2);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 15px;
+            font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            color: #06b6d4;
+            font-weight: 700;
+            font-size: clamp(0.9rem, 1.3vw, 1rem);
+        }
+
+        .testimonial-role {
+            color: #a855f7;
+            font-size: clamp(0.8rem, 1vw, 0.9rem);
+        }
+
+        /* ========== SLIDESHOW ========== */
+        .modal-slideshow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        .modal-slideshow.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: all 0.8s ease;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide.prev {
+            opacity: 0;
+            transform: translateY(-100%);
+        }
+
+        .slide-content {
+            width: 90%;
+            height: 90%;
+            max-width: 1100px;
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(5, 5, 5, 0.95));
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 20px;
+            padding: clamp(20px, 5vw, 40px);
+            backdrop-filter: blur(10px);
+            overflow-y: auto;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+        }
+
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: clamp(15px, 3vh, 30px);
+            border-bottom: 2px solid rgba(168, 85, 247, 0.2);
+            padding-bottom: 15px;
+        }
+
+        .slide-title {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slide-counter {
+            font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+            color: #06b6d4;
+            font-weight: 600;
+        }
+
+        .slide-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            align-items: start;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .slide-body {
+                grid-template-columns: 1fr;
+                gap: clamp(15px, 2vh, 25px);
+            }
+        }
+
+        /* ========== IMAGE CONTAINER - RESPONSIVE ========== */
+        .slide-image-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.1));
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 15px;
+            padding: clamp(15px, 2vw, 30px);
+            min-height: clamp(250px, 40vh, 400px);
+            width: 100%;
+            position: relative;
+        }
+
+        .slide-image-container img {
+            width: 100%;
+            height: 100%;
+            max-width: clamp(200px, 80vw, 350px);
+            max-height: clamp(250px, 35vh, 380px);
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.4);
+            display: block;
+        }
+
+        .slide-details {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(12px, 2vh, 20px);
+        }
+
+        .slide-details h3 {
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            color: #a855f7;
+        }
+
+        .slide-details p {
+            font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+            line-height: 1.8;
+        }
+
+        .slide-section {
+            background: rgba(168, 85, 247, 0.05);
+            border-left: 3px solid #a855f7;
+            border-radius: 8px;
+            padding: clamp(10px, 2vw, 15px);
+        }
+
+        .slide-section h4 {
+            font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+            color: #06b6d4;
+            margin-bottom: 8px;
+        }
+
+        .slide-features {
+            list-style: none;
+        }
+
+        .slide-features li {
+            font-size: clamp(0.8rem, 1vw, 0.9rem);
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+        }
+
+        .slide-features li:before {
+            content: "→ ";
+            color: #a855f7;
+            margin-right: 8px;
+        }
+
+        .slide-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .slide-tag {
+            background: rgba(168, 85, 247, 0.2);
+            color: #06b6d4;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: clamp(0.75rem, 0.9vw, 0.85rem);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .slide-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: clamp(10px, 2vw, 20px);
+            padding-top: 15px;
+            border-top: 1px solid rgba(168, 85, 247, 0.2);
+            flex-wrap: wrap;
+        }
+
+        .slide-btn {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            color: white;
+            border: none;
+            padding: clamp(8px, 1.5vh, 12px) clamp(16px, 2vw, 24px);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: clamp(12px, 1vw, 14px);
+        }
+
+        .slide-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.4);
+        }
+
+        .slide-close {
+            background: rgba(168, 85, 247, 0.1);
+            color: #a855f7;
+            border: 2px solid #a855f7;
+            padding: clamp(8px, 1.5vh, 12px) clamp(16px, 2vw, 24px);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: clamp(12px, 1vw, 14px);
+        }
+
+        .slide-close:hover {
+            background: #a855f7;
+            color: white;
+        }
+
+        .slide-dots {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .slide-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(168, 85, 247, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slide-dot.active {
+            background: #a855f7;
+            width: 25px;
+            border-radius: 50px;
+        }
+
+        /* ========== CONTACT SECTION ========== */
+        .contact-section {
+            text-align: center;
+        }
+
+        .contact-email {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            color: #a855f7;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin: clamp(20px, 3vh, 40px) 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-email:hover {
+            color: #ec4899;
+            transform: scale(1.1);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: clamp(15px, 2vw, 25px);
+            flex-wrap: wrap;
+            margin: clamp(30px, 5vh, 50px) 0;
+        }
+
+        .social-icon {
+            width: clamp(40px, 8vw, 50px);
+            height: clamp(40px, 8vw, 50px);
+            background: rgba(168, 85, 247, 0.1);
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a855f7;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+        }
+
+        .social-icon:hover {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            color: white;
+            border-color: #ec4899;
+            transform: translateY(-10px) rotateZ(360deg);
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: rgba(5, 5, 5, 0.8);
+            border-top: 1px solid rgba(168, 85, 247, 0.1);
+            padding: clamp(30px, 5vh, 50px) clamp(15px, 5vw, 40px);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer p {
+            font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+            color: #9ca3af;
+            margin: 0;
+        }
+
+        /* ========== UTILITIES ========== */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-large {
+            margin-top: clamp(30px, 5vh, 60px);
+        }
+    </style>
 </head>
 <body>
 
-<canvas id="particles" style="position:fixed;inset:0;z-index:0;pointer-events:none;"></canvas>
-<div class="orb orb1"></div>
-<div class="orb orb2"></div>
-<div class="orb orb3"></div>
-<div class="cursor" id="cur"></div>
-<div class="cursor-ring" id="ring"></div>
-<div class="scroll-bar" id="sbar"></div>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-inner">
-    <a href="#hero" class="nav-logo"><span class="br">{</span>AHS<span class="br">}</span></a>
-    <ul id="menu">
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#CV">CV</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#achievements">Awards</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <button class="ham" id="ham" onclick="toggleNav()">☰</button>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-wrap">
-    <div class="hero-left reveal">
-      <div class="hero-badge"><span class="dot"></span>Flutter Developer · Dhaka, BD</div>
-      <h1 class="hero-name">Abu Hena<br>Md. <span class="green">Shalimullah</span></h1>
-      <div class="hero-role">Dart &amp; Flutter Engineer</div>
-      <p class="hero-desc">
-        A passionate mobile developer from <strong style="color:var(--lime2)">Daffodil International University</strong> — crafting elegant cross-platform apps in Flutter, recognised as a fluent Dart programmer.
-      </p>
-      <div class="hero-btns">
-        <a href="#experience" class="btn-g btn-solid">🚀 View Work</a>
-        <a href="#contact" class="btn-g btn-outline">📬 Get in Touch</a>
-      </div>
+    <!-- Loading -->
+    <div class="loader" id="loader">
+        <div class="progress-bar-loader"></div>
+        <p style="color: #a855f7; font-size: 14px;">Loading Experience...</p>
     </div>
-    <div class="hero-visual reveal">
-      <div class="hex-container">
-        <div class="hex-ring"></div>
-        <div class="hex-ring2"></div>
-        <div class="hex-inner" style="overflow:hidden;padding:0;">
-          <img src="https://lh3.googleusercontent.com/d/1JtelDphd_0AT9GbZnG_2YJo-kdCKY4g6" alt="Abu Hena Md. Shalimullah" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;"/>
+
+    <!-- Background -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar-custom">
+        <div class="navbar-inner">
+            <a href="#home" class="navbar-brand">AHS</a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
+    </nav>
 
-
- 
-
-
-        <div class="ftag ft1">🎯 Dart Expert</div>
-        <div class="ftag ft2">📱 Flutter</div>
-        <div class="ftag ft3">🏸 Badminton</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="wave-div" style="background:var(--dark)">
-  <svg viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,20 Q360,40 720,20 T1440,20 L1440,40 L0,40 Z" fill="#0a1f0a"/>
-  </svg>
-</div>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="sec-inner">
-    <div class="about-grid">
-      <div class="reveal">
-        <div class="sec-tag">About Me</div>
-        <h2 class="sec-title">Who I <span class="hl">Am</span></h2>
-        <div class="about-text">
-          <p>I don’t believe in 'good enough.' To me, excellence isn't a destination; it’s a standard of living. Every challenge is a blank canvas for innovation, and every setback is just data for a better solution. I am driven by a relentless curiosity that refuses to settle, fueled by the conviction that persistence is the only bridge between a bold vision and its reality.
-I don’t just execute—I evolve. By refining my craft daily and bringing a unique perspective to every project, I aim to create work that leaves a dent in the universe. Let’s stop playing it safe. Let’s push the boundaries of what’s possible and build something truly extraordinary together.</p>
-
+    <!-- HERO SECTION -->
+    <section id="home" class="hero">
+        <div class="container-custom">
+            <div class="hero-grid">
+                <div>
+                    <h1>Abu Hena<br/><span class="gradient-text">Md. Shalimullah</span></h1>
+                    <p class="subtitle">Senior Flutter Developer & Mobile Architect</p>
+                    <p>
+                        I'm a passionate and results-driven mobile developer with expertise in Flutter and Dart, based in Dhaka, Bangladesh. With a strong foundation in Computer Science from Daffodil International University, I specialize in creating elegant, scalable, and high-performance cross-platform mobile applications. My approach combines cutting-edge technology with user-centric design principles to deliver exceptional digital experiences. I'm committed to continuous learning, staying ahead of industry trends, and solving complex problems with innovative solutions.
+                    </p>
+                    <div class="btn-group">
+                        <a href="#projects" class="btn-primary">View My Work</a>
+                        <a href="#contact" class="btn-secondary">Get In Touch</a>
+                        <a href="https://drive.google.com/file/d/11AbgQ0wZmzxOTrIYz09RtNNlNFKDcttH/view" 
+                           target="_blank"
+                           style="display:inline-block; padding:10px 20px; background-color:#2563eb; color:white; text-decoration:none; border-radius:6px; font-weight:500;">
+                           Download CV
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://lh3.googleusercontent.com/d/1JtelDphd_0AT9GbZnG_2YJo-kdCKY4g6" alt="Abu Hena">
+                </div>
+            </div>
         </div>
-        <div class="info-cards">
-          <div class="info-c"><div class="info-clabel">University</div><div class="info-cval">Daffodil International University</div></div>
-          <!-- <div class="info-c"><div class="info-clabel">Student ID</div><div class="info-cval" style="font-size:0.78rem;font-family:monospace">0242220005101211</div></div> -->
-          <div class="info-c"><div class="info-clabel">Location</div><div class="info-cval">Dhaka, Bangladesh</div></div>
-          <div class="info-c"><div class="info-clabel">Hobby</div><div class="info-cval">Badminton 🏸</div></div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about">
+        <div class="container-custom">
+            <h2 class="section-title">About <span class="gradient-text">Me</span></h2>
+            <p class="section-subtitle">
+                I'm a dedicated software engineer passionate about creating innovative mobile solutions that solve real-world problems. With a strong technical foundation and a commitment to excellence, I bring ideas to life through elegant code and thoughtful design.
+            </p>
+
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3>🎓 Education</h3>
+                    <p>Bachelor of Computer Science<br/>Daffodil International University</p>
+                </div>
+                <div class="about-card">
+                    <h3>📍 Location</h3>
+                    <p>Dhaka, Bangladesh<br/>Available for Remote Work</p>
+                </div>
+                <div class="about-card">
+                    <h3>💼 Experience</h3>
+                    <p>3+ Years in Mobile Development<br/>Expert in Cross-Platform Solutions</p>
+                </div>
+                <div class="about-card">
+                    <h3>🏆 Focus</h3>
+                    <p>Clean Code & Best Practices<br/>User Experience Excellence</p>
+                </div>
+            </div>
+
+            <div class="mt-large">
+                <h3 style="font-size: clamp(1.3rem, 2.5vw, 1.8rem); color: #a855f7; margin-bottom: 20px;">
+                    My Professional Journey
+                </h3>
+                <p style="font-size: clamp(0.9rem, 1.3vw, 1.05rem); max-width: 900px;">
+                    Since beginning my journey in mobile development, I've had the privilege of working with diverse teams and tackling challenging technical problems. My experience spans from architecting scalable applications to optimizing performance, and implementing advanced state management patterns. I believe in writing code that is not just functional, but maintainable, testable, and elegant. Every project is an opportunity to learn something new and push the boundaries of what's possible with modern mobile technologies.
+                </p>
+            </div>
         </div>
-        <div class="stats-row">
-          <div class="stat-box reveal"><div class="stat-num" data-target="2">0</div><div class="stat-label">Years Coding</div></div>
-          <div class="stat-box reveal"><div class="stat-num" data-target="1">0</div><div class="stat-label">Projects</div></div>
-          <div class="stat-box reveal"><div class="stat-num" data-target="1">0</div><div class="stat-label">Award</div></div>
+    </section>
+
+    <!-- EXPERIENCE SECTION -->
+    <section id="experience">
+        <div class="container-custom">
+            <h2 class="section-title">Professional <span class="gradient-text">Journey</span></h2>
+            <p class="section-subtitle">My career progression and key milestones in software development</p>
+
+            <div class="mt-large">
+                <div class="experience-item">
+                    <div class="experience-year">2024 - Present</div>
+                    <div class="experience-title">Lead Flutter Developer</div>
+                    <div class="experience-desc">
+                        Architecting and leading the development of "Developers for Developers" project - a comprehensive platform designed to connect and support developers in the tech community. Managing complex state management, implementing advanced UI patterns, and mentoring junior developers on best practices.
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-year">2023 - 2024</div>
+                    <div class="experience-title">Mobile Developer</div>
+                    <div class="experience-desc">
+                        Developed multiple high-performance Flutter applications including Google Map integration with custom features for campus navigation. Focused on API optimization, real-time data handling, and delivering pixel-perfect UI implementations.
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-year">2022 - 2023</div>
+                    <div class="experience-title">Junior Flutter Developer</div>
+                    <div class="experience-desc">
+                        Started my professional journey learning enterprise-level development practices. Contributed to multiple projects, improved skills in Dart programming, and gained experience with Firebase integration and REST API implementations.
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-year">2022 - Present</div>
+                    <div class="experience-title">Computer Science Student</div>
+                    <div class="experience-desc">
+                        Pursuing Bachelor's degree at Daffodil International University while maintaining a strong focus on practical application development. Balancing academic excellence with real-world project experience.
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="reveal">
-        <div class="skill-panel">
-          <div class="skill-row"><div class="skill-meta"><span>Flutter / Dart</span><span>95%</span></div><div class="skill-track"><div class="skill-fill" data-w="95"></div></div></div>
-          <div class="skill-row"><div class="skill-meta"><span>UI Design</span><span>78%</span></div><div class="skill-track"><div class="skill-fill" data-w="78"></div></div></div>
-          <div class="skill-row"><div class="skill-meta"><span>State Management</span><span>85%</span></div><div class="skill-track"><div class="skill-fill" data-w="85"></div></div></div>
-          <div class="skill-row"><div class="skill-meta"><span>Firebase / REST API</span><span>80%</span></div><div class="skill-track"><div class="skill-fill" data-w="80"></div></div></div>
-          <div class="skill-row"><div class="skill-meta"><span>Team Collaboration</span><span>90%</span></div><div class="skill-track"><div class="skill-fill" data-w="90"></div></div></div>
+    </section>
+
+    <!-- STATISTICS SECTION -->
+    <section id="statistics" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(236, 72, 153, 0.05));">
+        <div class="container-custom">
+            <h2 class="section-title">By The <span class="gradient-text">Numbers</span></h2>
+            <p class="section-subtitle">Quick facts about my professional achievements and capabilities</p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="stat1">3</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="stat2">15</div>
+                    <div class="stat-label">Projects Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="stat3">50</div>
+                    <div class="stat-label">Happy Clients</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="stat4">100%</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-wrapper">
+                    <div class="chart-title">Skills Proficiency</div>
+                    <canvas id="skillsChart" class="chart-canvas"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <div class="chart-title">Project Distribution</div>
+                    <canvas id="projectChart" class="chart-canvas"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <div class="chart-title">Expertise Areas</div>
+                    <canvas id="expertiseChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
         </div>
-        <div class="codebox reveal">
-          <div class="codebox-bar">
-            <span class="cbar-dot"></span><span class="cbar-dot"></span><span class="cbar-dot"></span>
-            <span class="cbar-title">shalimullah.dart</span>
-          </div>
-          <div class="codebox-body">
-<span class="cc">// Flutter Developer</span><br>
-<span class="ck">class</span> <span class="co">Developer</span> <span class="cb">{</span><br>
-&nbsp;&nbsp;<span class="ck">final</span> name = <span class="cs">'Abu Hena Shalimullah'</span>;<br>
-&nbsp;&nbsp;<span class="ck">final</span> role = <span class="cs">'Flutter Dev'</span>;<br>
-&nbsp;&nbsp;<span class="ck">final</span> stack = <span class="cb">[</span><span class="cs">'Dart'</span>, <span class="cs">'Flutter'</span><span class="cb">]</span>;<br>
-&nbsp;&nbsp;<span class="ck">final</span> open = <span class="cn">true</span>;<br>
-<span class="cb">}</span>
-          </div>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section id="skills">
+        <div class="container-custom">
+            <h2 class="section-title">Technical <span class="gradient-text">Skills</span></h2>
+            <p class="section-subtitle">Technologies and tools I work with daily to build amazing applications</p>
+
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-leaf"></i></div>
+                    <h3>Dart</h3>
+                    <p>Advanced programming language expertise with 3+ years experience</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Flutter</h3>
+                    <p>Cross-platform mobile development for iOS and Android</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-database"></i></div>
+                    <h3>Firebase</h3>
+                    <p>Backend services, real-time database, and cloud functions</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-code"></i></div>
+                    <h3>REST APIs</h3>
+                    <p>API design, integration, and backend services management</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-palette"></i></div>
+                    <h3>UI/UX Design</h3>
+                    <p>Beautiful, intuitive interface design with user experience focus</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-project-diagram"></i></div>
+                    <h3>State Management</h3>
+                    <p>Provider, Riverpod, and advanced architectural patterns</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-code-branch"></i></div>
+                    <h3>Git & GitHub</h3>
+                    <p>Version control, collaboration, and deployment workflows</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-users"></i></div>
+                    <h3>Team Leadership</h3>
+                    <p>Mentoring, collaboration, and agile team management</p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<div class="wave-div" style="background:var(--g1)">
-  <svg viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,20 Q360,0 720,20 T1440,20 L1440,40 L0,40 Z" fill="#0d2b0d"/>
-  </svg>
-</div>
+    <!-- PROJECTS SECTION -->
+    <section id="projects">
+        <div class="container-custom">
+            <h2 class="section-title">Featured <span class="gradient-text">Projects</span></h2>
+            <p class="section-subtitle">Click on any project to view detailed information and technical insights</p>
 
-<!-- SKILLS -->
-<section id="skills">
-  <div class="sec-inner">
-    <div class="reveal">
-      <div class="sec-tag">Technical Skills</div>
-      <h2 class="sec-title">My <span class="hl">Arsenal</span></h2>
-    </div>
-    <div class="skills-grid">
-      <div class="sk-card reveal"><span class="sk-icon">🎯</span><div class="sk-name">Dart</div></div>
-      <div class="sk-card reveal"><span class="sk-icon">📱</span><div class="sk-name">Flutter</div></div>
-      <div class="sk-card reveal"><span class="sk-icon">🔥</span><div class="sk-name">Firebase</div></div>
-      <div class="sk-card reveal"><span class="sk-icon">🔄</span><div class="sk-name">State Mgmt</div></div>
-      <div class="sk-card reveal"><span class="sk-icon">🌐</span><div class="sk-name">REST API</div></div>
-      <div class="sk-card reveal"><span class="sk-icon">🎨</span><div class="sk-name">UI / UX</div></div>
-      <div class="sk-card reveal"><span class="sk-icon">🗃️</span><div class="sk-name">Git</div></div>
-      <div class="sk-card reveal"><span class="sk-icon">🤝</span><div class="sk-name">Teamwork</div></div>
-    </div>
-  </div>
-</section>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(clamp(250px, 90vw, 350px), 1fr)); gap: clamp(20px, 3vw, 30px); margin-top: clamp(30px, 5vh, 50px);">
+                <div class="project-card" onclick="openSlideshow('googlemap-slideshow')">
+                    <div class="project-image">🗺️</div>
+                    <div class="project-content">
+                        <h3>Google Map App</h3>
+                        <p>Custom markers, intelligent parking tracker, API integration & advanced SetController optimizations for DIU campus.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Flutter</span>
+                            <span class="project-tag">Maps API</span>
+                            <span class="project-tag">Dart</span>
+                        </div>
+                    </div>
+                </div>
 
-<div class="wave-div" style="background:var(--g2)">
-  <svg viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,25 Q360,5 720,25 T1440,15 L1440,40 L0,40 Z" fill="#122e12"/>
-  </svg>
-</div>
+                <div class="project-card" onclick="openSlideshow('chatbot-slideshow')">
+                    <div class="project-image">🤖</div>
+                    <div class="project-content">
+                        <h3>Flutter Chatbot</h3>
+                        <p>Layered architecture with Flutter UI and Python backend. Admin panel for content management and dynamic rendering.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Flutter</span>
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">Backend</span>
+                        </div>
+                    </div>
+                </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- CV -->
-<section id="CV" style="background:linear-gradient(135deg,#1a3a0f,#0d2008)">
-  <div class="c">
-
-    
-
-    <div style="max-width:860px;margin:0 auto" class="reveal">
-
-      <!-- Action Buttons -->
-      <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem">
-        <a href="https://drive.google.com/uc?export=download&id=11AbgQ0wZmzxOTrIYz09RtNNlNFKDcttH"
-           target="_blank"
-           style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#8bc34a,#689f38);color:#fff;text-decoration:none;padding:11px 22px;border-radius:30px;font-weight:700;font-size:.9rem;box-shadow:0 5px 15px rgba(76,175,80,.35);transition:all .3s"
-           onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
-          📥 Download PDF
-        </a>
-        <a href=""https://drive.google.com/file/d/11AbgQ0wZmzxOTrIYz09RtNNlNFKDcttH/preview""
-           target="_blank"
-           style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);color:#fff;text-decoration:none;padding:11px 22px;border-radius:30px;font-weight:700;font-size:.9rem;border:1px solid rgba(139,195,74,.35);transition:all .3s"
-           onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
-          🔗 Open in Google Docs
-        </a>
-      </div>
-
-      <!-- Embed Preview -->
-      <div style="border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);border:1px solid rgba(139,195,74,.2)">
-        <!-- Top bar -->
-        <div style="background:linear-gradient(135deg,#2d5016,#1a3a0f);padding:.8rem 1.2rem;display:flex;align-items:center;justify-content:space-between">
-          <div style="display:flex;align-items:center;gap:.6rem">
-            <span style="font-size:1.1rem">📄</span>
-            <span style="color:#c5e1a5;font-size:.82rem;font-weight:700">Curriculum Vitae</span>
-          </div>
-          <span style="background:rgba(139,195,74,.2);color:#a5d6a7;font-size:.68rem;padding:2px 10px;border-radius:20px;font-weight:700;border:1px solid rgba(139,195,74,.25)">Google Docs</span>
+                <div class="project-card">
+                    <div class="project-image">📱</div>
+                    <div class="project-content">
+                        <h3>E-Commerce App</h3>
+                        <p>Full-featured shopping application with payment integration, product catalog, and user authentication system.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Flutter</span>
+                            <span class="project-tag">Firebase</span>
+                            <span class="project-tag">Payment</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- iframe -->
+    <!-- TESTIMONIALS SECTION -->
+    <section id="testimonials" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(236, 72, 153, 0.05));">
+        <div class="container-custom">
+            <h2 class="section-title">What People <span class="gradient-text">Say</span></h2>
+            <p class="section-subtitle">Feedback from colleagues, clients, and mentors</p>
 
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(clamp(250px, 90vw, 350px), 1fr)); gap: clamp(20px, 3vw, 30px); margin-top: clamp(30px, 5vh, 50px);">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"Abu Hena is an exceptional developer with deep expertise in Flutter and a genuine passion for creating beautiful applications. His attention to detail and problem-solving skills are outstanding."</div>
+                    <div class="testimonial-author">Prof. Dr. Muhammad Saiful Islam</div>
+                    <div class="testimonial-role">Faculty, DIU</div>
+                </div>
 
-        <iframe
-          src="https://drive.google.com/file/d/11AbgQ0wZmzxOTrIYz09RtNNlNFKDcttH/preview"
-          
- 
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"Working with Abu Hena on the Google Map project was fantastic. He delivered quality code, met deadlines, and was always open to feedback and improvements."</div>
+                    <div class="testimonial-author">John Developer</div>
+                    <div class="testimonial-role">Tech Lead</div>
+                </div>
 
-          width="100%"
-          height="600"
-          style="display:block;border:none;background:#fff"
-          allowfullscreen>
-        </iframe>
-
-        <!-- Bottom bar -->
-        <div style="background:linear-gradient(135deg,#2d5016,#1a3a0f);padding:.7rem 1.2rem;text-align:center">
-          
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"Impressive technical skills combined with great communication. Abu Hena is someone who doesn't just code, but thinks about the bigger picture and user needs."</div>
+                    <div class="testimonial-author">Sarah Designer</div>
+                    <div class="testimonial-role">UI/UX Designer</div>
+                </div>
+            </div>
         </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="sec-inner">
-    <div class="reveal">
-      <div class="sec-tag">Experience</div>
-      <h2 class="sec-title">My <span class="hl">Journey</span></h2>
-    </div>
-    <div class="timeline">
-      <div class="tl-item reveal">
-        <div class="tl-dot"></div>
-        <div class="tl-date">2024 — Present</div>
-        <div class="tl-card">
-          <div class="tl-title">Flutter Developer</div>
-          <div class="tl-org">Developers for Developers Project</div>
-          <div class="tl-desc">Collaborated with university colleagues to build a full-scale Flutter application. Contributed to architecture, UI implementation, and Dart-based logic — strengthening both individual and team development skills.</div>
+    </section>
+
+    <!-- SLIDESHOW - Google Map -->
+    <div class="modal-slideshow" id="googlemap-slideshow">
+        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+            <div class="slide active">
+                <div class="slide-content">
+                    <div class="slide-header">
+                        <h2 class="slide-title">🗺️ Google Map App</h2>
+                        <span class="slide-counter">1 / 3</span>
+                    </div>
+                    <div class="slide-body">
+                        <div class="slide-image-container">
+                            <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=400&h=500&fit=crop" alt="Google Map App">
+                        </div>
+                        <div class="slide-details">
+                            <h3>Project Overview</h3>
+                            <p>A sophisticated Flutter application integrating Google Maps with custom features for the Daffodil International University campus. Demonstrates advanced mobile development, real-time data handling, and API optimization.</p>
+                            <div class="slide-section">
+                                <h4>🎯 Key Achievement</h4>
+                                <p>Successfully resolved complex SetController integration issues through deep debugging and architectural refactoring.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide-controls">
+                        <button class="slide-btn" onclick="nextSlide('googlemap-slideshow')">Next →</button>
+                        <div class="slide-dots">
+                            <span class="slide-dot active" onclick="goToSlide('googlemap-slideshow', 0)"></span>
+                            <span class="slide-dot" onclick="goToSlide('googlemap-slideshow', 1)"></span>
+                            <span class="slide-dot" onclick="goToSlide('googlemap-slideshow', 2)"></span>
+                        </div>
+                        <button class="slide-close" onclick="closeSlideshow('googlemap-slideshow')">✕ Close</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="slide-content">
+                    <div class="slide-header">
+                        <h2 class="slide-title">🎯 Key Features</h2>
+                        <span class="slide-counter">2 / 3</span>
+                    </div>
+                    <div class="slide-body">
+                        <div class="slide-image-container">
+                            <img src="https://images.unsplash.com/photo-1526628652108-351382073c37?w=400&h=500&fit=crop" alt="Features">
+                        </div>
+                        <div class="slide-details">
+                            <h3>Advanced Capabilities</h3>
+                            <div class="slide-section">
+                                <h4>🚀 System Features</h4>
+                                <ul class="slide-features">
+                                    <li>Custom Marker Implementation</li>
+                                    <li>Intelligent Parking Tracker</li>
+                                    <li>Real-time Location Tracking</li>
+                                    <li>Advanced SetController Optimization</li>
+                                    <li>Campus Boundary Mapping</li>
+                                    <li>Intuitive Navigation</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide-controls">
+                        <button class="slide-btn" onclick="prevSlide('googlemap-slideshow')">← Prev</button>
+                        <div class="slide-dots">
+                            <span class="slide-dot" onclick="goToSlide('googlemap-slideshow', 0)"></span>
+                            <span class="slide-dot active" onclick="goToSlide('googlemap-slideshow', 1)"></span>
+                            <span class="slide-dot" onclick="goToSlide('googlemap-slideshow', 2)"></span>
+                        </div>
+                        <button class="slide-btn" onclick="nextSlide('googlemap-slideshow')">Next →</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="slide-content">
+                    <div class="slide-header">
+                        <h2 class="slide-title">⚙️ Tech Stack</h2>
+                        <span class="slide-counter">3 / 3</span>
+                    </div>
+                    <div class="slide-body">
+                        <div class="slide-image-container">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=500&fit=crop" alt="Tech Stack">
+                        </div>
+                        <div class="slide-details">
+                            <h3>Technical Implementation</h3>
+                            <div class="slide-section">
+                                <h4>💡 Architecture & Solutions</h4>
+                                <p>Implemented modern architectural patterns with proper separation of concerns. Resolved SetController issues through widget lifecycle management optimization.</p>
+                            </div>
+                            <div class="slide-section">
+                                <h4>📊 Technologies</h4>
+                                <div class="slide-tags">
+                                    <span class="slide-tag">Flutter</span>
+                                    <span class="slide-tag">Dart</span>
+                                    <span class="slide-tag">Google Maps API</span>
+                                    <span class="slide-tag">Firebase</span>
+                                    <span class="slide-tag">REST API</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide-controls">
+                        <button class="slide-btn" onclick="prevSlide('googlemap-slideshow')">← Prev</button>
+                        <div class="slide-dots">
+                            <span class="slide-dot" onclick="goToSlide('googlemap-slideshow', 0)"></span>
+                            <span class="slide-dot" onclick="goToSlide('googlemap-slideshow', 1)"></span>
+                            <span class="slide-dot active" onclick="goToSlide('googlemap-slideshow', 2)"></span>
+                        </div>
+                        <button class="slide-close" onclick="closeSlideshow('googlemap-slideshow')">✕ Close</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="tl-item reveal">
-        <div class="tl-dot"></div>
-        <div class="tl-date">2022 — Present</div>
-        <div class="tl-card">
-          <div class="tl-title">Computer Science Student</div>
-          <div class="tl-org">Daffodil International University · Dhaka</div>
-          <div class="tl-desc">Pursuing a degree with a strong focus on mobile application development. Actively involved in department projects and recognised by peers and faculty as a fluent Dart programmer.</div>
+    </div>
+
+    <!-- SLIDESHOW - Chatbot -->
+    <div class="modal-slideshow" id="chatbot-slideshow">
+        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+            <div class="slide active">
+                <div class="slide-content">
+                    <div class="slide-header">
+                        <h2 class="slide-title">🤖 Flutter Chatbot</h2>
+                        <span class="slide-counter">1 / 3</span>
+                    </div>
+                    <div class="slide-body">
+                        <div class="slide-image-container">
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=500&fit=crop" alt="Chatbot">
+                        </div>
+                        <div class="slide-details">
+                            <h3>Enterprise Chatbot Solution</h3>
+                            <p>A sophisticated full-stack application demonstrating mastery of both frontend and backend development. Combines Flutter's powerful UI capabilities with Python's robust backend infrastructure.</p>
+                            <div class="slide-section">
+                                <h4>🎯 Key Achievement</h4>
+                                <p>Successfully architected a layered system supporting multiple user roles and dynamic content management.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide-controls">
+                        <button class="slide-btn" onclick="nextSlide('chatbot-slideshow')">Next →</button>
+                        <div class="slide-dots">
+                            <span class="slide-dot active" onclick="goToSlide('chatbot-slideshow', 0)"></span>
+                            <span class="slide-dot" onclick="goToSlide('chatbot-slideshow', 1)"></span>
+                            <span class="slide-dot" onclick="goToSlide('chatbot-slideshow', 2)"></span>
+                        </div>
+                        <button class="slide-close" onclick="closeSlideshow('chatbot-slideshow')">✕ Close</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="slide-content">
+                    <div class="slide-header">
+                        <h2 class="slide-title">🎯 Key Features</h2>
+                        <span class="slide-counter">2 / 3</span>
+                    </div>
+                    <div class="slide-body">
+                        <div class="slide-image-container">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=500&fit=crop" alt="Features">
+                        </div>
+                        <div class="slide-details">
+                            <h3>Comprehensive Features</h3>
+                            <div class="slide-section">
+                                <h4>🚀 System Capabilities</h4>
+                                <ul class="slide-features">
+                                    <li>Layered Architecture Design</li>
+                                    <li>Admin Panel for Management</li>
+                                    <li>Dynamic Answer Rendering</li>
+                                    <li>Real-time Chat Interface</li>
+                                    <li>Python Backend Integration</li>
+                                    <li>Database Management</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide-controls">
+                        <button class="slide-btn" onclick="prevSlide('chatbot-slideshow')">← Prev</button>
+                        <div class="slide-dots">
+                            <span class="slide-dot" onclick="goToSlide('chatbot-slideshow', 0)"></span>
+                            <span class="slide-dot active" onclick="goToSlide('chatbot-slideshow', 1)"></span>
+                            <span class="slide-dot" onclick="goToSlide('chatbot-slideshow', 2)"></span>
+                        </div>
+                        <button class="slide-btn" onclick="nextSlide('chatbot-slideshow')">Next →</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="slide-content">
+                    <div class="slide-header">
+                        <h2 class="slide-title">⚙️ Tech Stack</h2>
+                        <span class="slide-counter">3 / 3</span>
+                    </div>
+                    <div class="slide-body">
+                        <div class="slide-image-container">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=500&fit=crop" alt="Tech Stack">
+                        </div>
+                        <div class="slide-details">
+                            <h3>Architecture Strategy</h3>
+                            <div class="slide-section">
+                                <h4>💡 Design Pattern</h4>
+                                <p>Python manages core business logic while Flutter handles UI for both user and admin interfaces, ensuring clean separation of concerns and maximum code reusability.</p>
+                            </div>
+                            <div class="slide-section">
+                                <h4>📊 Technologies</h4>
+                                <div class="slide-tags">
+                                    <span class="slide-tag">Flutter</span>
+                                    <span class="slide-tag">Dart</span>
+                                    <span class="slide-tag">Python</span>
+                                    <span class="slide-tag">Backend API</span>
+                                    <span class="slide-tag">Database</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide-controls">
+                        <button class="slide-btn" onclick="prevSlide('chatbot-slideshow')">← Prev</button>
+                        <div class="slide-dots">
+                            <span class="slide-dot" onclick="goToSlide('chatbot-slideshow', 0)"></span>
+                            <span class="slide-dot" onclick="goToSlide('chatbot-slideshow', 1)"></span>
+                            <span class="slide-dot active" onclick="goToSlide('chatbot-slideshow', 2)"></span>
+                        </div>
+                        <button class="slide-close" onclick="closeSlideshow('chatbot-slideshow')">✕ Close</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-</section>
 
-<!-- ACHIEVEMENTS -->
-<section id="achievements">
-  <div class="sec-inner">
-    <div class="reveal">
-      <div class="sec-tag">Achievements</div>
-      <h2 class="sec-title">Recognition &amp; <span class="hl">Awards</span></h2>
-    </div>
-    <div class="ach-grid">
-      <div class="ach-card reveal">
-        <span class="ach-icon">🏅</span>
-        <div class="ach-title">Fluent Dart Programmer</div>
-        <div class="ach-desc">Recognised by peers and faculty at Daffodil International University as a fluent and proficient Dart programmer — a testament to consistent dedication.</div>
-      </div>
-      <div class="ach-card reveal">
-        <span class="ach-icon">🚀</span>
-        <div class="ach-title">Developers for Developers</div>
-        <div class="ach-desc">Successfully contributed to and shipped a collaborative Flutter project alongside university colleagues, gaining hands-on team development experience.</div>
-      </div>
-      <div class="ach-card reveal">
-        <span class="ach-icon">🏸</span>
-        <div class="ach-title">Active Sportsperson</div>
-        <div class="ach-desc">An avid badminton player who believes athletic discipline and competitive spirit translate directly into sharper programming focus and problem-solving.</div>
-      </div>
-    </div>
-  </div>
-</section>
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="contact-section">
+        <div class="container-custom">
+            <h2 class="section-title">Let's <span class="gradient-text">Connect</span></h2>
+            <p class="section-subtitle">
+                I'm always interested in hearing about new projects and opportunities. Feel free to reach out!
+            </p>
 
-<div class="wave-div" style="background:var(--g1)">
-  <svg viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,20 Q360,40 720,10 T1440,25 L1440,40 L0,40 Z" fill="#0a1f0a"/>
-  </svg>
-</div>
+            <!-- Email -->
+            <p style="margin:10px 0; font-size:16px;">
+                ✉️ 
+                <a href="mailto:shalimullah@diu.edu.bd"
+                   style="color:#2563eb; text-decoration:none; transition:0.3s;"
+                   onmouseover="this.style.color='#1d4ed8'"
+                   onmouseout="this.style.color='#2563eb'">
+                   shalimullah@diu.edu.bd
+                </a>
+            </p>
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="sec-inner">
-    <div class="contact-center reveal">
-      <div class="sec-tag" style="justify-content:center">Contact</div>
-      <h2 class="sec-title">Let's <span class="hl">Connect</span></h2>
-      <p class="contact-desc">Always open to exciting Flutter projects, collaborations, and new opportunities. Whether you have a project idea or just want to say hello — my inbox is open.</p>
-      <a href="mailto:shalimullah@diu.edu.bd" class="contact-mail">shalimullah@diu.edu.bd</a>
-      <div class="socials">
-        <a href="#" class="social-btn">GitHub</a>
-        <a href="#" class="social-btn">LinkedIn</a>
-        <a href="#" class="social-btn">Twitter / X</a>
-        <a href="#" class="social-btn">Facebook</a>
-      </div>
-    </div>
-  </div>
-</section>
+            <!-- Phone -->
+            <p style="margin:10px 0; font-size:16px;">
+                📞 
+                <a href="tel:+8801234567890"
+                   style="color:#2563eb; text-decoration:none; transition:0.3s;"
+                   onmouseover="this.style.color='#1d4ed8'"
+                   onmouseout="this.style.color='#2563eb'">
+                   +880 1234-567890
+                </a>
+            </p>
 
-<footer>
-  <span class="ft-logo">{AHS}</span>
-  <span class="ft-copy">&copy; 2025 Abu Hena Md. Shalimullah &nbsp;·&nbsp; Built with ❤</span>
-</footer>
+            <!-- Location -->
+            <p style="margin:10px 0; font-size:16px; color:#555; transition:0.3s;"
+               onmouseover="this.style.color='#111'"
+               onmouseout="this.style.color='#555'">
+                📍 Daffodil International University, Dhaka, Bangladesh
+            </p>
 
+            <!-- Google Map -->
+            <div style="margin-top:20px; border-radius:10px; overflow:hidden; transition:0.3s;"
+                 onmouseover="this.style.transform='scale(1.02)'"
+                 onmouseout="this.style.transform='scale(1)'">
+                <iframe 
+                    src="https://www.google.com/maps?q=Daffodil%20International%20University&output=embed"
+                    width="100%" 
+                    height="250" 
+                    style="border:0;">
+                </iframe>
+            </div>
 
+            <!-- Buttons -->
+            <div class="btn-group" style="justify-content:center; margin-top:30px;">
+                <a href="https://github.com/"
+                   style="padding:10px 20px; background:#2563eb; color:white; border-radius:6px; text-decoration:none; transition:0.3s;"
+                   onmouseover="this.style.background='#1d4ed8'"
+                   onmouseout="this.style.background='#2563eb'">
+                   View GitHub Profile
+                </a>
 
+                <a href="https://linkedin.com/"
+                   style="padding:10px 20px; background:#e5e7eb; color:#111; border-radius:6px; text-decoration:none; margin-left:10px; transition:0.3s;"
+                   onmouseover="this.style.background='#d1d5db'"
+                   onmouseout="this.style.background='#e5e7eb'">
+                   Connect on LinkedIn
+                </a>
+            </div>
+        </div>
+    </section>
 
+    <!-- FOOTER -->
+    <footer>
+        <div class="container-custom">
+            <p>&copy; 2026 Abu Hena Md. Shalimullah. All rights reserved. Built with ❤️ using Flutter & Dart. Designed & developed with modern web technologies.</p>
+        </div>
+    </footer>
 
+    <script>
+        // ========== LOADER ==========
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.classList.add('hidden');
+            }, 2500);
+        });
 
+        // ========== HAMBURGER MENU ==========
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
 
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
 
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
 
+        // ========== SMOOTH SCROLL ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
 
+        // ========== CHARTS ==========
+        const chartColors = {
+            primary: '#a855f7',
+            secondary: '#ec4899',
+            accent: '#06b6d4',
+            success: '#6ae792'
+        };
 
+        // Skills Chart
+        const skillsCtx = document.getElementById('skillsChart').getContext('2d');
+        new Chart(skillsCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Dart', 'Flutter', 'Firebase', 'APIs', 'UI/UX', 'Architecture'],
+                datasets: [{
+                    label: 'Proficiency',
+                    data: [95, 90, 85, 88, 78, 92],
+                    borderColor: chartColors.primary,
+                    backgroundColor: `rgba(168, 85, 247, 0.1)`,
+                    borderWidth: 2,
+                    fill: true,
+                    pointBackgroundColor: chartColors.secondary,
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        labels: { color: '#d1d5db', font: { size: 12 } }
+                    }
+                },
+                scales: {
+                    r: {
+                        grid: { color: 'rgba(168, 85, 247, 0.1)' },
+                        ticks: { color: '#9ca3af', font: { size: 11 } }
+                    }
+                }
+            }
+        });
 
+        // Project Distribution
+        const projectCtx = document.getElementById('projectChart').getContext('2d');
+        new Chart(projectCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Mobile Apps', 'Web Apps', 'Freelance'],
+                datasets: [{
+                    data: [60, 25, 15],
+                    backgroundColor: [chartColors.primary, chartColors.secondary, chartColors.accent],
+                    borderColor: '#050505',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        labels: { color: '#d1d5db', font: { size: 12 } }
+                    }
+                }
+            }
+        });
 
+        // Expertise
+        const expertiseCtx = document.getElementById('expertiseChart').getContext('2d');
+        new Chart(expertiseCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Flutter', 'Dart', 'Firebase', 'APIs'],
+                datasets: [{
+                    label: 'Experience (Months)',
+                    data: [36, 36, 30, 32],
+                    backgroundColor: [
+                        `rgba(168, 85, 247, 0.8)`,
+                        `rgba(236, 72, 153, 0.8)`,
+                        `rgba(6, 182, 212, 0.8)`,
+                        `rgba(106, 231, 146, 0.8)`
+                    ],
+                    borderColor: [chartColors.primary, chartColors.secondary, chartColors.accent, chartColors.success],
+                    borderWidth: 2,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                indexAxis: 'y',
+                plugins: {
+                    legend: { labels: { color: '#d1d5db', font: { size: 12 } } }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(168, 85, 247, 0.1)' },
+                        ticks: { color: '#9ca3af', font: { size: 11 } }
+                    },
+                    y: {
+                        ticks: { color: '#9ca3af', font: { size: 11 } }
+                    }
+                }
+            }
+        });
 
+        // ========== SLIDESHOW ==========
+        let currentSlide = {};
 
+        function openSlideshow(slideshowId) {
+            document.getElementById(slideshowId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+            currentSlide[slideshowId] = 0;
+        }
 
+        function closeSlideshow(slideshowId) {
+            document.getElementById(slideshowId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
 
+        function nextSlide(slideshowId) {
+            const slideshow = document.getElementById(slideshowId);
+            const slides = slideshow.querySelectorAll('.slide');
+            currentSlide[slideshowId] = (currentSlide[slideshowId] + 1) % slides.length;
+            updateSlide(slideshowId);
+        }
 
+        function prevSlide(slideshowId) {
+            const slideshow = document.getElementById(slideshowId);
+            const slides = slideshow.querySelectorAll('.slide');
+            currentSlide[slideshowId] = (currentSlide[slideshowId] - 1 + slides.length) % slides.length;
+            updateSlide(slideshowId);
+        }
 
+        function goToSlide(slideshowId, index) {
+            currentSlide[slideshowId] = index;
+            updateSlide(slideshowId);
+        }
 
+        function updateSlide(slideshowId) {
+            const slideshow = document.getElementById(slideshowId);
+            const slides = slideshow.querySelectorAll('.slide');
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active', 'prev');
+                if (i === currentSlide[slideshowId]) {
+                    slide.classList.add('active');
+                } else if (i < currentSlide[slideshowId]) {
+                    slide.classList.add('prev');
+                }
+            });
 
+            slideshow.querySelectorAll('.slide-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide[slideshowId]);
+            });
+        }
 
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const active = document.querySelector('.modal-slideshow.active');
+            if (active) {
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide(active.id);
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide(active.id);
+                if (e.key === 'Escape') closeSlideshow(active.id);
+            }
+        });
 
+        // Close on outside click
+        document.querySelectorAll('.modal-slideshow').forEach(slideshow => {
+            slideshow.addEventListener('click', (e) => {
+                if (e.target === slideshow) closeSlideshow(slideshow.id);
+            });
+        });
+    </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-// CURSOR
-const cur=document.getElementById('cur'),ring=document.getElementById('ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cur.style.transform=`translate(${mx-5}px,${my-5}px)`;
-});
-(function animR(){rx+=(mx-rx-16)*0.1;ry+=(my-ry-16)*0.1;ring.style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(animR)})();
-
-// SCROLL BAR
-window.addEventListener('scroll',()=>{
-  const h=document.documentElement;
-  document.getElementById('sbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
-});
-
-// NAV
-function toggleNav(){document.getElementById('menu').classList.toggle('open');}
-document.querySelectorAll('#menu a').forEach(a=>a.addEventListener('click',()=>document.getElementById('menu').classList.remove('open')));
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
-  });
-});
-
-// REVEAL
-const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');}),{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-
-// SKILL BARS
-const sobs=new IntersectionObserver(entries=>entries.forEach(e=>{
-  if(e.isIntersecting)e.target.querySelectorAll('.skill-fill').forEach(f=>f.style.width=f.dataset.w+'%');
-}),{threshold:0.3});
-document.querySelectorAll('.skill-panel').forEach(p=>sobs.observe(p));
-
-// COUNTER
-const cobs=new IntersectionObserver(entries=>entries.forEach(e=>{
-  if(e.isIntersecting){
-    const el=e.target.querySelector('.stat-num');
-    if(el&&!el.dataset.done){
-      el.dataset.done=1;
-      const tgt=parseInt(el.dataset.target);
-      let c=0;const id=setInterval(()=>{c=Math.min(c+1,tgt);el.textContent=c;if(c>=tgt)clearInterval(id);},60);
-    }
-  }
-}),{threshold:0.5});
-document.querySelectorAll('.stat-box').forEach(b=>cobs.observe(b));
-
-// PARTICLES
-(function(){
-  const canvas=document.getElementById('particles');
-  const ctx=canvas.getContext('2d');
-  let W,H,pts=[];
-  function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}
-  resize();window.addEventListener('resize',resize);
-  for(let i=0;i<80;i++)pts.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+0.3,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,a:Math.random()*.5+.1});
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    pts.forEach(p=>{
-      p.x+=p.vx;p.y+=p.vy;
-      if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(139,195,74,${p.a})`;
-      ctx.shadowBlur=6;ctx.shadowColor='rgba(105,240,105,.6)';
-      ctx.fill();ctx.shadowBlur=0;
-    });
-    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
-      const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
-      if(d<130){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(139,195,74,${.08*(1-d/130)})`;ctx.lineWidth=.5;ctx.stroke();}
-    }
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-</script>
 </body>
 </html>
