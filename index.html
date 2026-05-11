@@ -611,25 +611,100 @@
             height: auto;
         }
 
-        /* ========== PROJECTS SECTION ========== */
+        /* ========== PROJECTS SECTION — HORIZONTAL SCROLL + VERTICAL SLIDE REVEAL ========== */
+
+        /* Outer wrapper: masks overflow so cards slide in from below */
+        .projects-scroll-outer {
+            position: relative;
+            margin-top: clamp(30px, 5vh, 50px);
+            overflow: hidden; /* keeps page from widening */
+        }
+
+        /* Fade-edge left/right hint */
+        .projects-scroll-outer::before,
+        .projects-scroll-outer::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 40px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .projects-scroll-outer::before {
+            left: 0;
+            background: linear-gradient(to right, #050505, transparent);
+        }
+        .projects-scroll-outer::after {
+            right: 0;
+            background: linear-gradient(to left, #050505, transparent);
+        }
+
+        /* Horizontally scrollable track */
+        .projects-scroll-track {
+            display: flex;
+            gap: clamp(20px, 3vw, 30px);
+            overflow-x: auto;
+            overflow-y: visible;
+            padding: 20px 50px 30px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(168, 85, 247, 0.5) rgba(168, 85, 247, 0.1);
+        }
+
+        .projects-scroll-track::-webkit-scrollbar {
+            height: 6px;
+        }
+        .projects-scroll-track::-webkit-scrollbar-track {
+            background: rgba(168, 85, 247, 0.1);
+            border-radius: 10px;
+        }
+        .projects-scroll-track::-webkit-scrollbar-thumb {
+            background: linear-gradient(90deg, #a855f7, #ec4899);
+            border-radius: 10px;
+        }
+
+        /* Each project card inside horizontal scroll */
         .project-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(168, 85, 247, 0.2);
             border-radius: 15px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.6s ease;
             cursor: pointer;
+
+            /* Fixed width so cards don't shrink */
+            flex: 0 0 clamp(260px, 80vw, 340px);
+            scroll-snap-align: start;
+
+            /* VERTICAL SLIDE REVEAL initial state */
+            opacity: 0;
+            transform: translateY(60px);
         }
 
+        /* Revealed state (added by IntersectionObserver) */
+        .project-card.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Staggered delay for each card */
+        .project-card:nth-child(1) { transition-delay: 0s; }
+        .project-card:nth-child(2) { transition-delay: 0.15s; }
+        .project-card:nth-child(3) { transition-delay: 0.3s; }
+        .project-card:nth-child(4) { transition-delay: 0.45s; }
+        .project-card:nth-child(5) { transition-delay: 0.6s; }
+
         .project-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 30px 60px rgba(168, 85, 247, 0.2);
+            transform: translateY(-15px) !important;
+            box-shadow: 0 30px 60px rgba(168, 85, 247, 0.3);
         }
 
         .project-image {
             width: 100%;
             height: clamp(180px, 30vh, 250px);
-            background:linear-gradient(135deg, #a855f726, #ec489966);
+            background: linear-gradient(135deg, #a855f726, #ec489966);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -667,6 +742,29 @@
             font-size: clamp(0.75rem, 0.9vw, 0.85rem);
             font-weight: 500;
             border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        /* Scroll hint arrow */
+        .scroll-hint {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 8px;
+            padding-right: 10px;
+            color: rgba(168, 85, 247, 0.6);
+            font-size: 0.8rem;
+            font-weight: 500;
+            animation: hintPulse 2s ease-in-out infinite;
+        }
+
+        .scroll-hint i {
+            font-size: 0.9rem;
+        }
+
+        @keyframes hintPulse {
+            0%, 100% { opacity: 0.5; transform: translateX(0); }
+            50% { opacity: 1; transform: translateX(6px); }
         }
 
         /* ========== TESTIMONIALS ========== */
@@ -746,10 +844,10 @@
         }
 
         .slide-content {
-            width: 90%;
-            height: 90%;
-            max-width: 1100px;
-            background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(5, 5, 5, 0.95));
+            /* width: 90%;
+            height: 90%; */
+            /* max-width: 1100px; */
+            background: rgb(168, 59, 59);
             border: 1px solid rgba(168, 85, 247, 0.3);
             border-radius: 20px;
             padding: clamp(20px, 5vw, 40px);
@@ -770,7 +868,7 @@
 
         .slide-title {
             font-size: clamp(1.5rem, 4vw, 2.5rem);
-            background: linear-gradient(135deg, #a855f7, #ec4899);
+            background: black;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -798,7 +896,6 @@
             }
         }
 
-        /* ========== IMAGE CONTAINER - RESPONSIVE ========== */
         .slide-image-container {
             display: flex;
             align-items: center;
@@ -831,7 +928,7 @@
 
         .slide-details h3 {
             font-size: clamp(1.2rem, 2vw, 1.5rem);
-            color: #a855f7;
+            color: #010002;
         }
 
         .slide-details p {
@@ -1021,6 +1118,319 @@
         .mt-large {
             margin-top: clamp(30px, 5vh, 60px);
         }
+
+
+
+ 
+/* ========== PROJECTS MOBILE SAME-LAYOUT FIX ========== */
+@media (max-width: 900px) {
+    #projects {
+        height: 330vh !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    #projects .stack-wrap {
+        height: 100svh !important;
+        overflow: hidden !important;
+    }
+
+    #projects .stack-stage {
+        height: 100svh !important;
+        padding: 8px !important;
+        overflow: hidden !important;
+    }
+
+    #projects .stack-card {
+        width: calc(100% - 16px) !important;
+        height: calc(100svh - 16px) !important;
+        border-radius: 18px !important;
+        overflow: hidden !important;
+
+        /* same desktop-like layout */
+        display: grid !important;
+        grid-template-columns: 54% 46% !important;
+        grid-template-rows: 1fr !important;
+        align-items: stretch !important;
+    }
+
+    /* keep split color like desktop, not top-bottom */
+    #projects .blue-theme {
+        background: linear-gradient(90deg, #f8fafc 0 54%, #0c28db 54% 100%) !important;
+    }
+
+    #projects .red-theme {
+        background: linear-gradient(90deg, #fff7ed 0 54%, #d91d1d 54% 100%) !important;
+    }
+
+    #projects .green-theme {
+        background: linear-gradient(90deg, #f0fdf4 0 54%, #119a4b 54% 100%) !important;
+    }
+
+    #projects .panel-left {
+        padding: 14px 10px 12px 12px !important;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+    }
+
+    #projects .panel-right {
+        padding: 10px 10px 10px 4px !important;
+        min-height: auto !important;
+        overflow: hidden !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    #projects .top-content {
+        max-width: 100% !important;
+    }
+
+    #projects .top-arrow {
+        font-size: 1.15rem !important;
+        margin-bottom: 5px !important;
+        line-height: 1 !important;
+    }
+
+    #projects .project-title {
+        font-size: clamp(1.05rem, 4.8vw, 1.65rem) !important;
+        line-height: 1.05 !important;
+        letter-spacing: -0.6px !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+
+    #projects .project-desc {
+        margin-top: 7px !important;
+        font-size: 0.66rem !important;
+        line-height: 1.35 !important;
+        max-width: 100% !important;
+        color: #334155 !important;
+
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+    }
+
+    #projects .mini-info {
+        margin-top: 8px !important;
+        gap: 5px !important;
+        max-width: 100% !important;
+    }
+
+    #projects .mini-info div {
+        padding: 6px 7px !important;
+        border-radius: 9px !important;
+    }
+
+    #projects .mini-info strong {
+        font-size: 9.5px !important;
+        margin-bottom: 1px !important;
+    }
+
+    #projects .mini-info p {
+        font-size: 8.8px !important;
+        line-height: 1.25 !important;
+
+        display: -webkit-box !important;
+        -webkit-line-clamp: 1 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+    }
+
+    #projects .mini-info div:nth-child(3) {
+        display: none !important;
+    }
+
+    #projects .project-tags {
+        margin-top: 8px !important;
+        gap: 4px !important;
+    }
+
+    #projects .project-tags span {
+        padding: 4px 7px !important;
+        font-size: 8.5px !important;
+        border-radius: 999px !important;
+    }
+
+    #projects .project-meta {
+        display: none !important;
+    }
+
+    #projects .phone-showcase {
+        width: 100% !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    #projects .phone-glow {
+        width: 150px !important;
+        height: 150px !important;
+        filter: blur(13px) !important;
+        opacity: 0.24 !important;
+    }
+
+    #projects .phone-mockup {
+        width: min(132px, 35vw) !important;
+        height: min(270px, 66svh) !important;
+        border-radius: 23px !important;
+        padding: 7px !important;
+        transform: none !important;
+    }
+
+    #projects .phone-notch {
+        width: 54px !important;
+        height: 13px !important;
+        top: 6px !important;
+    }
+
+    #projects .phone-screen {
+        border-radius: 17px !important;
+    }
+
+    #projects .status-bar {
+        padding: 8px 8px 3px !important;
+        font-size: 6.5px !important;
+    }
+
+    #projects .app-ui {
+        padding: 5px 6px 7px !important;
+        gap: 5px !important;
+        height: calc(100% - 19px) !important;
+    }
+
+    #projects .app-title {
+        font-size: 9px !important;
+    }
+
+    #projects .app-subtitle {
+        font-size: 6.5px !important;
+        margin-top: 1px !important;
+    }
+
+    #projects .app-badge {
+        width: 23px !important;
+        height: 23px !important;
+        border-radius: 7px !important;
+        font-size: 10px !important;
+    }
+
+    #projects .hero-card {
+        padding: 7px !important;
+        border-radius: 10px !important;
+    }
+
+    #projects .hero-card h4 {
+        font-size: 8.5px !important;
+        line-height: 1.2 !important;
+    }
+
+    #projects .hero-card p {
+        font-size: 6.7px !important;
+        line-height: 1.25 !important;
+        margin-top: 3px !important;
+    }
+
+    #projects .ui-grid {
+        gap: 4px !important;
+    }
+
+    #projects .ui-box {
+        padding: 5px !important;
+        border-radius: 8px !important;
+    }
+
+    #projects .ui-box-title {
+        font-size: 6.5px !important;
+        margin-bottom: 2px !important;
+    }
+
+    #projects .ui-box-value {
+        font-size: 10px !important;
+    }
+
+    #projects .feature-list {
+        gap: 4px !important;
+    }
+
+    #projects .feature-item {
+        padding: 5px !important;
+        border-radius: 8px !important;
+        gap: 4px !important;
+    }
+
+    #projects .feature-icon {
+        width: 19px !important;
+        height: 19px !important;
+        border-radius: 6px !important;
+        font-size: 8px !important;
+    }
+
+    #projects .feature-text h5 {
+        font-size: 7.5px !important;
+    }
+
+    #projects .feature-text p {
+        font-size: 6.3px !important;
+        line-height: 1.2 !important;
+    }
+
+    #projects .bottom-nav {
+        padding: 4px 5px !important;
+        border-radius: 10px !important;
+    }
+
+    #projects .bottom-nav span {
+        width: 20px !important;
+        height: 20px !important;
+        border-radius: 7px !important;
+        font-size: 9px !important;
+    }
+
+    #projects .stack-progress {
+        bottom: 8px !important;
+    }
+
+    #projects .stack-dot {
+        width: 7px !important;
+        height: 7px !important;
+    }
+
+    #projects .stack-dot.active {
+        width: 22px !important;
+    }
+}
+
+@media (max-width: 380px) {
+    #projects .stack-card {
+        grid-template-columns: 55% 45% !important;
+    }
+
+    #projects .project-title {
+        font-size: 0.95rem !important;
+    }
+
+    #projects .project-desc {
+        font-size: 0.6rem !important;
+    }
+
+    #projects .mini-info div:nth-child(2) {
+        display: none !important;
+    }
+
+    #projects .phone-mockup {
+        width: min(112px, 34vw) !important;
+        height: min(230px, 62svh) !important;
+    }
+}
+  
+
+        
     </style>
 </head>
 <body>
@@ -1255,308 +1665,936 @@
         </div>
     </section>
 
-    <!-- PROJECTS SECTION -->
-    <section id="projects">
-        <div class="container-custom">
-            <h2 class="section-title">Featured <span class="gradient-text">Projects</span></h2>
-            <p class="section-subtitle">Click on any project to view detailed information and technical insights</p>
+    
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(clamp(250px, 90vw, 350px), 1fr)); gap: clamp(20px, 3vw, 30px); margin-top: clamp(30px, 5vh, 50px);">
-                <div class="project-card" onclick="openSlideshow('googlemap-slideshow')">
-                    <div class="project-image">🗺️</div>
-                    <div class="project-content">
-                        <h3>Google Map App</h3>
-                        <p>Custom markers, intelligent parking tracker, API integration & advanced SetController optimizations for DIU campus.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Flutter</span>
-                            <span class="project-tag">Maps API</span>
-                            <span class="project-tag">Dart</span>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="project-card" onclick="openSlideshow('chatbot-slideshow')">
-                    <div class="project-image">🤖</div>
-                    <div class="project-content">
-                        <h3>Flutter Chatbot</h3>
-                        <p>Layered architecture with Flutter UI and Python backend. Admin panel for content management and dynamic rendering.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Flutter</span>
-                            <span class="project-tag">Python</span>
-                            <span class="project-tag">Backend</span>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="project-card">
-                    <div class="project-image">📱</div>
-                    <div class="project-content">
-                        <h3>E-Commerce App</h3>
-                        <p>Full-featured shopping application with payment integration, product catalog, and user authentication system.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Flutter</span>
-                            <span class="project-tag">Firebase</span>
-                            <span class="project-tag">Payment</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- TESTIMONIALS SECTION -->
-    <section id="testimonials" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(236, 72, 153, 0.05));">
-        <div class="container-custom">
-            <h2 class="section-title">What People <span class="gradient-text">Say</span></h2>
-            <p class="section-subtitle">Feedback from colleagues, clients, and mentors</p>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(clamp(250px, 90vw, 350px), 1fr)); gap: clamp(20px, 3vw, 30px); margin-top: clamp(30px, 5vh, 50px);">
-                <div class="testimonial-card">
-                    <div class="testimonial-text">"Abu Hena is an exceptional developer with deep expertise in Flutter and a genuine passion for creating beautiful applications. His attention to detail and problem-solving skills are outstanding."</div>
-                    <div class="testimonial-author">Prof. Dr. Muhammad Saiful Islam</div>
-                    <div class="testimonial-role">Faculty, DIU</div>
-                </div>
 
-                <div class="testimonial-card">
-                    <div class="testimonial-text">"Working with Abu Hena on the Google Map project was fantastic. He delivered quality code, met deadlines, and was always open to feedback and improvements."</div>
-                    <div class="testimonial-author">John Developer</div>
-                    <div class="testimonial-role">Tech Lead</div>
-                </div>
 
-                <div class="testimonial-card">
-                    <div class="testimonial-text">"Impressive technical skills combined with great communication. Abu Hena is someone who doesn't just code, but thinks about the bigger picture and user needs."</div>
-                    <div class="testimonial-author">Sarah Designer</div>
-                    <div class="testimonial-role">UI/UX Designer</div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- SLIDESHOW - Google Map -->
-    <div class="modal-slideshow" id="googlemap-slideshow">
-        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
-            <div class="slide active">
-                <div class="slide-content">
-                    <div class="slide-header">
-                        <h2 class="slide-title">🗺️ Google Map App</h2>
-                        <span class="slide-counter">1 / 3</span>
-                    </div>
-                    <div class="slide-body">
-                        <div class="slide-image-container">
-                            <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=400&h=500&fit=crop" alt="Google Map App">
-                        </div>
-                        <div class="slide-details">
-                            <h3>Project Overview</h3>
-                            <p>A sophisticated Flutter application integrating Google Maps with custom features for the Daffodil International University campus. Demonstrates advanced mobile development, real-time data handling, and API optimization.</p>
-                            <div class="slide-section">
-                                <h4>🎯 Key Achievement</h4>
-                                <p>Successfully resolved complex SetController integration issues through deep debugging and architectural refactoring.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- PROJECTS SECTION - STACKED APP SHOWCASE -->
+<style>
+    #projects {
+        position: relative;
+        height: 320vh;
+        margin: 0;
+        padding: 0;
+        background: #050505;
+    }
+
+    #projects .stack-wrap {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow: hidden;
+        background: #050505;
+    }
+
+    #projects .stack-stage {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding: 24px;
+    }
+
+    #projects .stack-card {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: min(1180px, calc(100% - 48px));
+        height: calc(100vh - 48px);
+        transform: translate(-50%, -50%);
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 30px 80px rgba(0,0,0,0.28);
+        will-change: transform, filter;
+        display: grid;
+        grid-template-columns: 1.08fr 0.92fr;
+        align-items: stretch;
+        background: #111;
+    }
+
+    #projects .stack-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, rgba(255,255,255,0.10), transparent 12%);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    #projects .card-1 { z-index: 1; }
+    #projects .card-2 { z-index: 2; }
+    #projects .card-3 { z-index: 3; }
+
+    /* themes */
+    #projects .blue-theme {
+        background: linear-gradient(90deg, #f8fafc 0 52%, #0c28db 52% 100%);
+    }
+
+    #projects .red-theme {
+        background: linear-gradient(90deg, #fff7ed 0 52%, #d91d1d 52% 100%);
+    }
+
+    #projects .green-theme {
+        background: linear-gradient(90deg, #f0fdf4 0 52%, #119a4b 52% 100%);
+    }
+
+    #projects .panel-left,
+    #projects .panel-right {
+        position: relative;
+        z-index: 2;
+        padding: clamp(28px, 4vw, 54px);
+    }
+
+    #projects .panel-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    #projects .top-content {
+        max-width: 560px;
+    }
+
+    #projects .top-arrow {
+        font-size: clamp(2rem, 3vw, 3rem);
+        line-height: 1;
+        color: #0f172a;
+        font-weight: 800;
+        margin-bottom: 18px;
+    }
+
+    #projects .project-title {
+        font-family: 'Poppins', sans-serif;
+        font-size: clamp(2rem, 4vw, 4.1rem);
+        line-height: 1.02;
+        letter-spacing: -2px;
+        color: #0f172a;
+        margin: 0;
+    }
+
+    #projects .project-desc {
+        margin-top: 16px;
+        font-size: clamp(0.95rem, 1.1vw, 1.04rem);
+        line-height: 1.75;
+        color: #334155;
+        max-width: 540px;
+    }
+
+    #projects .mini-info {
+        margin-top: 18px;
+        display: grid;
+        gap: 10px;
+        max-width: 560px;
+    }
+
+    #projects .mini-info div {
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: rgba(255,255,255,0.72);
+        border: 1px solid rgba(15,23,42,0.08);
+        box-shadow: 0 8px 22px rgba(15,23,42,0.06);
+    }
+
+    #projects .mini-info strong {
+        display: block;
+        margin-bottom: 4px;
+        color: #0f172a;
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    #projects .mini-info p {
+        margin: 0;
+        color: #475569;
+        font-size: 12.8px;
+        line-height: 1.58;
+    }
+
+    #projects .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    #projects .project-tags span {
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: #ffffff;
+        color: #0f172a;
+        border: 1px solid rgba(15,23,42,0.10);
+        font-size: 13px;
+        font-weight: 700;
+        box-shadow: 0 4px 14px rgba(15,23,42,0.05);
+    }
+
+    #projects .project-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-top: 20px;
+        color: #475569;
+        font-size: 14px;
+        font-weight: 700;
+        max-width: 560px;
+    }
+
+    /* right side */
+    #projects .panel-right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #projects .phone-showcase {
+        width: min(420px, 95%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    #projects .phone-glow {
+        position: absolute;
+        width: 360px;
+        height: 360px;
+        border-radius: 999px;
+        filter: blur(20px);
+        opacity: 0.28;
+    }
+
+    #projects .blue-theme .phone-glow {
+        background: radial-gradient(circle, #93c5fd, transparent 65%);
+    }
+
+    #projects .red-theme .phone-glow {
+        background: radial-gradient(circle, #fdba74, transparent 65%);
+    }
+
+    #projects .green-theme .phone-glow {
+        background: radial-gradient(circle, #86efac, transparent 65%);
+    }
+
+    #projects .phone-mockup {
+        position: relative;
+        width: 290px;
+        height: 590px;
+        border-radius: 42px;
+        background: linear-gradient(180deg, #111827 0%, #020617 100%);
+        padding: 14px;
+        box-shadow:
+            0 30px 70px rgba(0,0,0,0.35),
+            inset 0 1px 0 rgba(255,255,255,0.08);
+        border: 2px solid rgba(255,255,255,0.08);
+    }
+
+    #projects .phone-notch {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 110px;
+        height: 24px;
+        border-radius: 20px;
+        background: #000;
+        z-index: 5;
+    }
+
+    #projects .phone-screen {
+        width: 100%;
+        height: 100%;
+        border-radius: 30px;
+        overflow: hidden;
+        background: #ffffff;
+        position: relative;
+    }
+
+    #projects .status-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 18px 8px;
+        font-size: 11px;
+        font-weight: 700;
+        color: #0f172a;
+    }
+
+    #projects .app-ui {
+        padding: 10px 14px 16px;
+        height: calc(100% - 36px);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    #projects .app-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #projects .app-title {
+        font-size: 17px;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.2;
+    }
+
+    #projects .app-subtitle {
+        font-size: 11px;
+        color: #64748b;
+        margin-top: 4px;
+    }
+
+    #projects .app-badge {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    #projects .blue-theme .app-badge,
+    #projects .blue-theme .hero-card {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    }
+
+    #projects .red-theme .app-badge,
+    #projects .red-theme .hero-card {
+        background: linear-gradient(135deg, #f97316, #dc2626);
+    }
+
+    #projects .green-theme .app-badge,
+    #projects .green-theme .hero-card {
+        background: linear-gradient(135deg, #22c55e, #15803d);
+    }
+
+    #projects .hero-card {
+        border-radius: 20px;
+        padding: 16px;
+        color: #fff;
+        box-shadow: 0 12px 28px rgba(15,23,42,0.14);
+    }
+
+    #projects .hero-card h4 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 800;
+        line-height: 1.35;
+    }
+
+    #projects .hero-card p {
+        margin: 8px 0 0;
+        font-size: 12px;
+        line-height: 1.55;
+        opacity: 0.92;
+    }
+
+    #projects .ui-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    #projects .ui-box {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 12px;
+    }
+
+    #projects .ui-box-title {
+        font-size: 11px;
+        color: #64748b;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    #projects .ui-box-value {
+        font-size: 18px;
+        color: #0f172a;
+        font-weight: 800;
+    }
+
+    #projects .feature-list {
+        display: grid;
+        gap: 9px;
+    }
+
+    #projects .feature-item {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 11px 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 6px 18px rgba(15,23,42,0.04);
+    }
+
+    #projects .feature-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        color: #fff;
+        flex-shrink: 0;
+    }
+
+    #projects .blue-theme .feature-icon { background: #2563eb; }
+    #projects .red-theme .feature-icon { background: #ea580c; }
+    #projects .green-theme .feature-icon { background: #16a34a; }
+
+    #projects .feature-text h5 {
+        margin: 0;
+        font-size: 13px;
+        color: #0f172a;
+        font-weight: 800;
+        line-height: 1.3;
+    }
+
+    #projects .feature-text p {
+        margin: 3px 0 0;
+        font-size: 11px;
+        color: #64748b;
+        line-height: 1.45;
+    }
+
+    #projects .bottom-nav {
+        margin-top: auto;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        padding: 10px 12px;
+        display: flex;
+        justify-content: space-between;
+        box-shadow: 0 10px 24px rgba(15,23,42,0.05);
+    }
+
+    #projects .bottom-nav span {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8fafc;
+        color: #0f172a;
+        font-size: 16px;
+    }
+
+    #projects .stack-progress {
+        position: absolute;
+        left: 50%;
+        bottom: 24px;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+        z-index: 20;
+    }
+
+    #projects .stack-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.35);
+        transition: all 0.3s ease;
+    }
+
+    #projects .stack-dot.active {
+        width: 36px;
+        background: #ffffff;
+    }
+
+    @media (max-width: 980px) {
+        #projects {
+            height: 360vh;
+        }
+
+        #projects .stack-stage {
+            padding: 14px;
+        }
+
+        #projects .stack-card {
+            width: calc(100% - 28px);
+            height: calc(100vh - 28px);
+            grid-template-columns: 1fr;
+            overflow-y: auto;
+        }
+
+        #projects .panel-left,
+        #projects .panel-right {
+            padding: 22px;
+        }
+
+        #projects .project-title {
+            font-size: clamp(1.8rem, 8vw, 3rem);
+            max-width: 100%;
+        }
+
+        #projects .project-desc,
+        #projects .mini-info,
+        #projects .project-meta {
+            max-width: 100%;
+        }
+
+        #projects .phone-mockup {
+            width: 240px;
+            height: 500px;
+            border-radius: 34px;
+        }
+
+        #projects .phone-glow {
+            width: 260px;
+            height: 260px;
+        }
+    }
+</style>
+
+<section id="projects">
+    <div class="stack-wrap">
+        <div class="stack-stage">
+
+            <!-- PROJECT 01 -->
+            <article class="stack-card card-1 blue-theme">
+                <div class="panel-left">
+                    <div class="top-content">
+                        <div class="top-arrow">↗</div>
+                        <h2 class="project-title">Google Map App for University Navigation</h2>
+
+                        <p class="project-desc">
+                            A Flutter-based Google Map project designed specially for my university,
+                            including custom pointers, API integration, and vehicle parking location tracking.
+                        </p>
+
+                        <div class="mini-info">
+                            <div>
+                                <strong>Problem</strong>
+                                <p>I faced problems with API integration, SetController pointer setup, and showing my university area properly.</p>
+                            </div>
+                            <div>
+                                <strong>Solution</strong>
+                                <p>After debugging, I solved the API and SetController issue, then added a unique university parking pointer feature.</p>
+                            </div>
+                            <div>
+                                <strong>Conclusion</strong>
+                                <p>This uniqueness makes the project stand out because it solves a real university parking and location problem.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="slide-controls">
-                        <button class="slide-btn" onclick="nextSlide('googlemap-slideshow')">Next →</button>
-                        <div class="slide-dots">
-                            <span class="slide-dot active" onclick="goToSlide('googlemap-slideshow', 0)"></span>
-                            <span class="slide-dot" onclick="goToSlide('googlemap-slideshow', 1)"></span>
-                            <span class="slide-dot" onclick="goToSlide('googlemap-slideshow', 2)"></span>
+
+                        <div class="project-tags">
+                            <span>Flutter</span>
+                            <span>Google Map API</span>
+                            <span>SetController</span>
                         </div>
-                        <button class="slide-close" onclick="closeSlideshow('googlemap-slideshow')">✕ Close</button>
+                    </div>
+
+                    <div class="project-meta">
+                        <span>Project 01</span>
+                        <span>Google Map</span>
                     </div>
                 </div>
-            </div>
 
-            <div class="slide">
-                <div class="slide-content">
-                    <div class="slide-header">
-                        <h2 class="slide-title">🎯 Key Features</h2>
-                        <span class="slide-counter">2 / 3</span>
-                    </div>
-                    <div class="slide-body">
-                        <div class="slide-image-container">
-                            <img src="https://images.unsplash.com/photo-1526628652108-351382073c37?w=400&h=500&fit=crop" alt="Features">
-                        </div>
-                        <div class="slide-details">
-                            <h3>Advanced Capabilities</h3>
-                            <div class="slide-section">
-                                <h4>🚀 System Features</h4>
-                                <ul class="slide-features">
-                                    <li>Custom Marker Implementation</li>
-                                    <li>Intelligent Parking Tracker</li>
-                                    <li>Real-time Location Tracking</li>
-                                    <li>Advanced SetController Optimization</li>
-                                    <li>Campus Boundary Mapping</li>
-                                    <li>Intuitive Navigation</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slide-controls">
-                        <button class="slide-btn" onclick="prevSlide('googlemap-slideshow')">← Prev</button>
-                        <div class="slide-dots">
-                            <span class="slide-dot" onclick="goToSlide('googlemap-slideshow', 0)"></span>
-                            <span class="slide-dot active" onclick="goToSlide('googlemap-slideshow', 1)"></span>
-                            <span class="slide-dot" onclick="goToSlide('googlemap-slideshow', 2)"></span>
-                        </div>
-                        <button class="slide-btn" onclick="nextSlide('googlemap-slideshow')">Next →</button>
-                    </div>
-                </div>
-            </div>
+                <div class="panel-right">
+                    <div class="phone-showcase">
+                        <div class="phone-glow"></div>
+                        <div class="phone-mockup">
+                            <div class="phone-notch"></div>
+                            <div class="phone-screen">
+                                <div class="status-bar">
+                                    <span>9:41</span>
+                                    <span>5G • 100%</span>
+                                </div>
+                                <div class="app-ui">
+                                    <div class="app-header">
+                                        <div>
+                                            <div class="app-title">Campus Map</div>
+                                            <div class="app-subtitle">Live route & parking tracker</div>
+                                        </div>
+                                        <div class="app-badge">🗺️</div>
+                                    </div>
 
-            <div class="slide">
-                <div class="slide-content">
-                    <div class="slide-header">
-                        <h2 class="slide-title">⚙️ Tech Stack</h2>
-                        <span class="slide-counter">3 / 3</span>
-                    </div>
-                    <div class="slide-body">
-                        <div class="slide-image-container">
-                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=500&fit=crop" alt="Tech Stack">
-                        </div>
-                        <div class="slide-details">
-                            <h3>Technical Implementation</h3>
-                            <div class="slide-section">
-                                <h4>💡 Architecture & Solutions</h4>
-                                <p>Implemented modern architectural patterns with proper separation of concerns. Resolved SetController issues through widget lifecycle management optimization.</p>
-                            </div>
-                            <div class="slide-section">
-                                <h4>📊 Technologies</h4>
-                                <div class="slide-tags">
-                                    <span class="slide-tag">Flutter</span>
-                                    <span class="slide-tag">Dart</span>
-                                    <span class="slide-tag">Google Maps API</span>
-                                    <span class="slide-tag">Firebase</span>
-                                    <span class="slide-tag">REST API</span>
+                                    <div class="hero-card">
+                                        <h4>Find your parking spot instantly</h4>
+                                        <p>Custom markers, route support, and university-focused location tracking.</p>
+                                    </div>
+
+                                    <div class="ui-grid">
+                                        <div class="ui-box">
+                                            <div class="ui-box-title">Active Spots</div>
+                                            <div class="ui-box-value">24</div>
+                                        </div>
+                                        <div class="ui-box">
+                                            <div class="ui-box-title">Saved Places</div>
+                                            <div class="ui-box-value">12</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="feature-list">
+                                        <div class="feature-item">
+                                            <div class="feature-icon">📍</div>
+                                            <div class="feature-text">
+                                                <h5>Custom Pointers</h5>
+                                                <p>Track key locations and parking positions.</p>
+                                            </div>
+                                        </div>
+                                        <div class="feature-item">
+                                            <div class="feature-icon">🛣️</div>
+                                            <div class="feature-text">
+                                                <h5>Route Navigation</h5>
+                                                <p>Better visibility for university routes.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bottom-nav">
+                                        <span>⌂</span>
+                                        <span>🧭</span>
+                                        <span>🔔</span>
+                                        <span>⚙</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="slide-controls">
-                        <button class="slide-btn" onclick="prevSlide('googlemap-slideshow')">← Prev</button>
-                        <div class="slide-dots">
-                            <span class="slide-dot" onclick="goToSlide('googlemap-slideshow', 0)"></span>
-                            <span class="slide-dot" onclick="goToSlide('googlemap-slideshow', 1)"></span>
-                            <span class="slide-dot active" onclick="goToSlide('googlemap-slideshow', 2)"></span>
-                        </div>
-                        <button class="slide-close" onclick="closeSlideshow('googlemap-slideshow')">✕ Close</button>
-                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
+            </article>
 
-    <!-- SLIDESHOW - Chatbot -->
-    <div class="modal-slideshow" id="chatbot-slideshow">
-        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
-            <div class="slide active">
-                <div class="slide-content">
-                    <div class="slide-header">
-                        <h2 class="slide-title">🤖 Flutter Chatbot</h2>
-                        <span class="slide-counter">1 / 3</span>
-                    </div>
-                    <div class="slide-body">
-                        <div class="slide-image-container">
-                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=500&fit=crop" alt="Chatbot">
-                        </div>
-                        <div class="slide-details">
-                            <h3>Enterprise Chatbot Solution</h3>
-                            <p>A sophisticated full-stack application demonstrating mastery of both frontend and backend development. Combines Flutter's powerful UI capabilities with Python's robust backend infrastructure.</p>
-                            <div class="slide-section">
-                                <h4>🎯 Key Achievement</h4>
-                                <p>Successfully architected a layered system supporting multiple user roles and dynamic content management.</p>
+            <!-- PROJECT 02 -->
+            <article class="stack-card card-2 red-theme">
+                <div class="panel-left">
+                    <div class="top-content">
+                        <div class="top-arrow">↗</div>
+                        <h2 class="project-title">Flutter Integrated Chatbot System</h2>
+
+                        <p class="project-desc">
+                            A modern chatbot project where Flutter is used in the frontend and answer-display
+                            section, while Python handles the backend logic.
+                        </p>
+
+                        <div class="mini-info">
+                            <div>
+                                <strong>Problem</strong>
+                                <p>I was confused about where Flutter should be integrated inside the chatbot project architecture.</p>
+                            </div>
+                            <div>
+                                <strong>Solution</strong>
+                                <p>I used Flutter for the admin panel and answer sheet, while Python works as the backend system.</p>
+                            </div>
+                            <div>
+                                <strong>Conclusion</strong>
+                                <p>This created a modern layered architecture where frontend and backend meet smoothly.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="slide-controls">
-                        <button class="slide-btn" onclick="nextSlide('chatbot-slideshow')">Next →</button>
-                        <div class="slide-dots">
-                            <span class="slide-dot active" onclick="goToSlide('chatbot-slideshow', 0)"></span>
-                            <span class="slide-dot" onclick="goToSlide('chatbot-slideshow', 1)"></span>
-                            <span class="slide-dot" onclick="goToSlide('chatbot-slideshow', 2)"></span>
+
+                        <div class="project-tags">
+                            <span>Flutter</span>
+                            <span>Python</span>
+                            <span>Backend</span>
                         </div>
-                        <button class="slide-close" onclick="closeSlideshow('chatbot-slideshow')">✕ Close</button>
+                    </div>
+
+                    <div class="project-meta">
+                        <span>Project 02</span>
+                        <span>Chatbot</span>
                     </div>
                 </div>
-            </div>
 
-            <div class="slide">
-                <div class="slide-content">
-                    <div class="slide-header">
-                        <h2 class="slide-title">🎯 Key Features</h2>
-                        <span class="slide-counter">2 / 3</span>
-                    </div>
-                    <div class="slide-body">
-                        <div class="slide-image-container">
-                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=500&fit=crop" alt="Features">
-                        </div>
-                        <div class="slide-details">
-                            <h3>Comprehensive Features</h3>
-                            <div class="slide-section">
-                                <h4>🚀 System Capabilities</h4>
-                                <ul class="slide-features">
-                                    <li>Layered Architecture Design</li>
-                                    <li>Admin Panel for Management</li>
-                                    <li>Dynamic Answer Rendering</li>
-                                    <li>Real-time Chat Interface</li>
-                                    <li>Python Backend Integration</li>
-                                    <li>Database Management</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slide-controls">
-                        <button class="slide-btn" onclick="prevSlide('chatbot-slideshow')">← Prev</button>
-                        <div class="slide-dots">
-                            <span class="slide-dot" onclick="goToSlide('chatbot-slideshow', 0)"></span>
-                            <span class="slide-dot active" onclick="goToSlide('chatbot-slideshow', 1)"></span>
-                            <span class="slide-dot" onclick="goToSlide('chatbot-slideshow', 2)"></span>
-                        </div>
-                        <button class="slide-btn" onclick="nextSlide('chatbot-slideshow')">Next →</button>
-                    </div>
-                </div>
-            </div>
+                <div class="panel-right">
+                    <div class="phone-showcase">
+                        <div class="phone-glow"></div>
+                        <div class="phone-mockup">
+                            <div class="phone-notch"></div>
+                            <div class="phone-screen">
+                                <div class="status-bar">
+                                    <span>9:41</span>
+                                    <span>5G • 100%</span>
+                                </div>
+                                <div class="app-ui">
+                                    <div class="app-header">
+                                        <div>
+                                            <div class="app-title">Smart Chatbot</div>
+                                            <div class="app-subtitle">Layered app architecture</div>
+                                        </div>
+                                        <div class="app-badge">🤖</div>
+                                    </div>
 
-            <div class="slide">
-                <div class="slide-content">
-                    <div class="slide-header">
-                        <h2 class="slide-title">⚙️ Tech Stack</h2>
-                        <span class="slide-counter">3 / 3</span>
-                    </div>
-                    <div class="slide-body">
-                        <div class="slide-image-container">
-                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=500&fit=crop" alt="Tech Stack">
-                        </div>
-                        <div class="slide-details">
-                            <h3>Architecture Strategy</h3>
-                            <div class="slide-section">
-                                <h4>💡 Design Pattern</h4>
-                                <p>Python manages core business logic while Flutter handles UI for both user and admin interfaces, ensuring clean separation of concerns and maximum code reusability.</p>
-                            </div>
-                            <div class="slide-section">
-                                <h4>📊 Technologies</h4>
-                                <div class="slide-tags">
-                                    <span class="slide-tag">Flutter</span>
-                                    <span class="slide-tag">Dart</span>
-                                    <span class="slide-tag">Python</span>
-                                    <span class="slide-tag">Backend API</span>
-                                    <span class="slide-tag">Database</span>
+                                    <div class="hero-card">
+                                        <h4>Frontend meets backend beautifully</h4>
+                                        <p>Flutter for UI, Python for logic, with a modern admin flow.</p>
+                                    </div>
+
+                                    <div class="feature-list">
+                                        <div class="feature-item">
+                                            <div class="feature-icon">💬</div>
+                                            <div class="feature-text">
+                                                <h5>Answer Rendering</h5>
+                                                <p>Dynamic responses displayed through clean UI.</p>
+                                            </div>
+                                        </div>
+                                        <div class="feature-item">
+                                            <div class="feature-icon">🛠</div>
+                                            <div class="feature-text">
+                                                <h5>Admin Panel</h5>
+                                                <p>Flutter-powered dashboard for management.</p>
+                                            </div>
+                                        </div>
+                                        <div class="feature-item">
+                                            <div class="feature-icon">⚡</div>
+                                            <div class="feature-text">
+                                                <h5>Python Backend</h5>
+                                                <p>Core logic and system handling in backend.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bottom-nav">
+                                        <span>⌂</span>
+                                        <span>💬</span>
+                                        <span>📊</span>
+                                        <span>⚙</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="slide-controls">
-                        <button class="slide-btn" onclick="prevSlide('chatbot-slideshow')">← Prev</button>
-                        <div class="slide-dots">
-                            <span class="slide-dot" onclick="goToSlide('chatbot-slideshow', 0)"></span>
-                            <span class="slide-dot" onclick="goToSlide('chatbot-slideshow', 1)"></span>
-                            <span class="slide-dot active" onclick="goToSlide('chatbot-slideshow', 2)"></span>
+                </div>
+            </article>
+
+            <!-- PROJECT 03 -->
+            <article class="stack-card card-3 green-theme">
+                <div class="panel-left">
+                    <div class="top-content">
+                        <div class="top-arrow">↗</div>
+                        <h2 class="project-title">Modern E-Commerce Mobile App</h2>
+
+                        <p class="project-desc">
+                            A premium shopping app concept with product catalog, user authentication,
+                            cart system, payment flow, and Firebase-powered backend services.
+                        </p>
+
+                        <div class="mini-info">
+                            <div>
+                                <strong>Problem</strong>
+                                <p>Creating a clean shopping flow with product, cart, login, and payment sections was challenging.</p>
+                            </div>
+                            <div>
+                                <strong>Solution</strong>
+                                <p>I designed a structured Flutter UI with Firebase support and smooth user flow.</p>
+                            </div>
+                            <div>
+                                <strong>Conclusion</strong>
+                                <p>The final result is a modern mobile app experience with strong visual hierarchy.</p>
+                            </div>
                         </div>
-                        <button class="slide-close" onclick="closeSlideshow('chatbot-slideshow')">✕ Close</button>
+
+                        <div class="project-tags">
+                            <span>Flutter</span>
+                            <span>Firebase</span>
+                            <span>Payment</span>
+                        </div>
+                    </div>
+
+                    <div class="project-meta">
+                        <span>Project 03</span>
+                        <span>E-Commerce</span>
                     </div>
                 </div>
+
+                <div class="panel-right">
+                    <div class="phone-showcase">
+                        <div class="phone-glow"></div>
+                        <div class="phone-mockup">
+                            <div class="phone-notch"></div>
+                            <div class="phone-screen">
+                                <div class="status-bar">
+                                    <span>9:41</span>
+                                    <span>5G • 100%</span>
+                                </div>
+                                <div class="app-ui">
+                                    <div class="app-header">
+                                        <div>
+                                            <div class="app-title">ShopEase</div>
+                                            <div class="app-subtitle">Premium mobile shopping</div>
+                                        </div>
+                                        <div class="app-badge">🛒</div>
+                                    </div>
+
+                                    <div class="hero-card">
+                                        <h4>Smarter shopping on mobile</h4>
+                                        <p>Products, payments, and user flow organized in one clean interface.</p>
+                                    </div>
+
+                                    <div class="ui-grid">
+                                        <div class="ui-box">
+                                            <div class="ui-box-title">Orders</div>
+                                            <div class="ui-box-value">128</div>
+                                        </div>
+                                        <div class="ui-box">
+                                            <div class="ui-box-title">Cart</div>
+                                            <div class="ui-box-value">08</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="feature-list">
+                                        <div class="feature-item">
+                                            <div class="feature-icon">🛍</div>
+                                            <div class="feature-text">
+                                                <h5>Product Catalog</h5>
+                                                <p>Explore items with clear card-based UI.</p>
+                                            </div>
+                                        </div>
+                                        <div class="feature-item">
+                                            <div class="feature-icon">💳</div>
+                                            <div class="feature-text">
+                                                <h5>Payment Flow</h5>
+                                                <p>Smooth checkout experience for users.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bottom-nav">
+                                        <span>⌂</span>
+                                        <span>🔍</span>
+                                        <span>🛒</span>
+                                        <span>👤</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <div class="stack-progress">
+                <span class="stack-dot active"></span>
+                <span class="stack-dot"></span>
+                <span class="stack-dot"></span>
             </div>
+
         </div>
     </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
     <!-- CONTACT SECTION -->
     <section id="contact" class="contact-section">
@@ -1633,217 +2671,464 @@
         </div>
     </footer>
 
-    <script>
-        // ========== LOADER ==========
-        window.addEventListener('load', () => {
-            const loader = document.getElementById('loader');
-            setTimeout(() => {
-                loader.classList.add('hidden');
-            }, 2500);
-        });
+   <!-- ================== FULL FIXED JS ================== -->
+<script>
+(function () {
+    "use strict";
 
-        // ========== HAMBURGER MENU ==========
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
+    function onReady(callback) {
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", callback);
+        } else {
+            callback();
+        }
+    }
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
+    /* ========== LOADER ========== */
+    window.addEventListener("load", function () {
+        var loader = document.getElementById("loader");
 
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
+        if (loader) {
+            setTimeout(function () {
+                loader.classList.add("hidden");
+            }, 1200);
+        }
+    });
+
+    onReady(function () {
+
+        /* ========== HAMBURGER MENU ========== */
+        var hamburger = document.getElementById("hamburger");
+        var navMenu = document.getElementById("navMenu");
+
+        if (hamburger && navMenu) {
+            hamburger.addEventListener("click", function () {
+                hamburger.classList.toggle("active");
+                navMenu.classList.toggle("active");
             });
-        });
 
-        // ========== SMOOTH SCROLL ==========
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+            var navLinks = document.querySelectorAll(".nav-link");
+
+            navLinks.forEach(function (link) {
+                link.addEventListener("click", function () {
+                    hamburger.classList.remove("active");
+                    navMenu.classList.remove("active");
+                });
+            });
+        }
+
+        /* ========== SMOOTH SCROLL ========== */
+        var anchorLinks = document.querySelectorAll('a[href^="#"]');
+
+        anchorLinks.forEach(function (anchor) {
+            anchor.addEventListener("click", function (e) {
+                var href = this.getAttribute("href");
+
+                if (!href || href === "#") return;
+
+                var target = document.querySelector(href);
+
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    e.preventDefault();
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
                 }
             });
         });
 
-        // ========== CHARTS ==========
-        const chartColors = {
-            primary: '#a855f7',
-            secondary: '#ec4899',
-            accent: '#06b6d4',
-            success: '#6ae792'
+        /* ========== GLOBAL SECTION + ITEM TRANSITION ========== */
+        document.body.classList.add("reveal-ready");
+
+        var revealSections = document.querySelectorAll(
+            "section:not(#projects), footer"
+        );
+
+        revealSections.forEach(function (section) {
+            section.classList.add("reveal-section");
+        });
+
+        var revealItems = document.querySelectorAll(
+            ".about-card, .experience-item, .skill-card, .stat-card, .chart-wrapper, .testimonial-card, .contact-section p, .contact-section iframe, .btn-group"
+        );
+
+        revealItems.forEach(function (item, index) {
+            item.classList.add("reveal-item");
+            item.style.setProperty("--delay", (index % 6) * 0.08 + "s");
+        });
+
+        var globalRevealObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    globalRevealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: "0px 0px -60px 0px"
+        });
+
+        document.querySelectorAll(".reveal-section, .reveal-item").forEach(function (el) {
+            globalRevealObserver.observe(el);
+        });
+
+        /* ========== CHARTS SAFE INIT ========== */
+        if (typeof Chart !== "undefined") {
+            var chartColors = {
+                primary: "#a855f7",
+                secondary: "#ec4899",
+                accent: "#06b6d4",
+                success: "#6ae792"
+            };
+
+            var skillsCanvas = document.getElementById("skillsChart");
+
+            if (skillsCanvas) {
+                new Chart(skillsCanvas.getContext("2d"), {
+                    type: "radar",
+                    data: {
+                        labels: ["Flutter", "Dart", "Firebase", "REST API", "UI/UX", "Git"],
+                        datasets: [{
+                            label: "Skill Level",
+                            data: [95, 92, 86, 88, 82, 84],
+                            backgroundColor: "rgba(168, 85, 247, 0.20)",
+                            borderColor: chartColors.primary,
+                            borderWidth: 2,
+                            pointBackgroundColor: chartColors.secondary,
+                            pointBorderColor: "#ffffff",
+                            pointHoverBackgroundColor: "#ffffff",
+                            pointHoverBorderColor: chartColors.primary
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: "#d1d5db",
+                                    font: { size: 12 }
+                                }
+                            }
+                        },
+                        scales: {
+                            r: {
+                                angleLines: { color: "rgba(168, 85, 247, 0.15)" },
+                                grid: { color: "rgba(168, 85, 247, 0.15)" },
+                                pointLabels: { color: "#d1d5db", font: { size: 11 } },
+                                ticks: {
+                                    color: "#9ca3af",
+                                    backdropColor: "transparent"
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            var projectCanvas = document.getElementById("projectChart");
+
+            if (projectCanvas) {
+                new Chart(projectCanvas.getContext("2d"), {
+                    type: "doughnut",
+                    data: {
+                        labels: ["Mobile Apps", "Backend/API", "UI/UX", "Maps"],
+                        datasets: [{
+                            data: [45, 25, 20, 10],
+                            backgroundColor: [
+                                "rgba(168, 85, 247, 0.85)",
+                                "rgba(236, 72, 153, 0.85)",
+                                "rgba(6, 182, 212, 0.85)",
+                                "rgba(106, 231, 146, 0.85)"
+                            ],
+                            borderColor: "#050505",
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: "#d1d5db",
+                                    font: { size: 12 }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            var expertiseCanvas = document.getElementById("expertiseChart");
+
+            if (expertiseCanvas) {
+                new Chart(expertiseCanvas.getContext("2d"), {
+                    type: "bar",
+                    data: {
+                        labels: ["Flutter", "Dart", "Firebase", "APIs"],
+                        datasets: [{
+                            label: "Experience",
+                            data: [36, 36, 30, 32],
+                            backgroundColor: [
+                                "rgba(168, 85, 247, 0.85)",
+                                "rgba(236, 72, 153, 0.85)",
+                                "rgba(6, 182, 212, 0.85)",
+                                "rgba(106, 231, 146, 0.85)"
+                            ],
+                            borderColor: [
+                                chartColors.primary,
+                                chartColors.secondary,
+                                chartColors.accent,
+                                chartColors.success
+                            ],
+                            borderWidth: 2,
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        indexAxis: "y",
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: "#d1d5db",
+                                    font: { size: 12 }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: { color: "rgba(168, 85, 247, 0.10)" },
+                                ticks: { color: "#9ca3af", font: { size: 11 } }
+                            },
+                            y: {
+                                grid: { color: "rgba(168, 85, 247, 0.10)" },
+                                ticks: { color: "#9ca3af", font: { size: 11 } }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        /* ========== OLD PROJECT CARDS REVEAL SAFE SUPPORT ========== */
+        var oldProjectCards = document.querySelectorAll(".project-card");
+        var oldProjectsSection = document.getElementById("projects");
+
+        if (oldProjectCards.length > 0 && oldProjectsSection && "IntersectionObserver" in window) {
+            var oldProjectRevealObserver = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        oldProjectCards.forEach(function (card) {
+                            card.classList.add("revealed");
+                        });
+
+                        oldProjectRevealObserver.disconnect();
+                    }
+                });
+            }, {
+                threshold: 0.15
+            });
+
+            oldProjectRevealObserver.observe(oldProjectsSection);
+        }
+
+        /* ========== SLIDESHOW SAFE SUPPORT ========== */
+        var currentSlide = {};
+
+        window.openSlideshow = function (slideshowId) {
+            var slideshow = document.getElementById(slideshowId);
+
+            if (!slideshow) return;
+
+            slideshow.classList.add("active");
+            document.body.style.overflow = "hidden";
+            currentSlide[slideshowId] = 0;
+
+            updateSlide(slideshowId);
         };
 
-        // Skills Chart
-        const skillsCtx = document.getElementById('skillsChart').getContext('2d');
-        new Chart(skillsCtx, {
-            type: 'radar',
-            data: {
-                labels: ['Dart', 'Flutter', 'Firebase', 'APIs', 'UI/UX', 'Architecture'],
-                datasets: [{
-                    label: 'Proficiency',
-                    data: [95, 90, 85, 88, 78, 92],
-                    borderColor: chartColors.primary,
-                    backgroundColor: `rgba(168, 85, 247, 0.1)`,
-                    borderWidth: 2,
-                    fill: true,
-                    pointBackgroundColor: chartColors.secondary,
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2,
-                    pointRadius: 5,
-                    pointHoverRadius: 7
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        labels: { color: '#d1d5db', font: { size: 12 } }
-                    }
-                },
-                scales: {
-                    r: {
-                        grid: { color: 'rgba(168, 85, 247, 0.1)' },
-                        ticks: { color: '#9ca3af', font: { size: 11 } }
-                    }
-                }
-            }
-        });
+        window.closeSlideshow = function (slideshowId) {
+            var slideshow = document.getElementById(slideshowId);
 
-        // Project Distribution
-        const projectCtx = document.getElementById('projectChart').getContext('2d');
-        new Chart(projectCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Mobile Apps', 'Web Apps', 'Freelance'],
-                datasets: [{
-                    data: [60, 25, 15],
-                    backgroundColor: [chartColors.primary, chartColors.secondary, chartColors.accent],
-                    borderColor: '#050505',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        labels: { color: '#d1d5db', font: { size: 12 } }
-                    }
-                }
-            }
-        });
+            if (!slideshow) return;
 
-        // Expertise
-        const expertiseCtx = document.getElementById('expertiseChart').getContext('2d');
-        new Chart(expertiseCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Flutter', 'Dart', 'Firebase', 'APIs'],
-                datasets: [{
-                    label: 'Experience (Months)',
-                    data: [36, 36, 30, 32],
-                    backgroundColor: [
-                        `rgba(168, 85, 247, 0.8)`,
-                        `rgba(236, 72, 153, 0.8)`,
-                        `rgba(6, 182, 212, 0.8)`,
-                        `rgba(106, 231, 146, 0.8)`
-                    ],
-                    borderColor: [chartColors.primary, chartColors.secondary, chartColors.accent, chartColors.success],
-                    borderWidth: 2,
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                indexAxis: 'y',
-                plugins: {
-                    legend: { labels: { color: '#d1d5db', font: { size: 12 } } }
-                },
-                scales: {
-                    x: {
-                        grid: { color: 'rgba(168, 85, 247, 0.1)' },
-                        ticks: { color: '#9ca3af', font: { size: 11 } }
-                    },
-                    y: {
-                        ticks: { color: '#9ca3af', font: { size: 11 } }
-                    }
-                }
-            }
-        });
+            slideshow.classList.remove("active");
+            document.body.style.overflow = "auto";
+        };
 
-        // ========== SLIDESHOW ==========
-        let currentSlide = {};
+        window.nextSlide = function (slideshowId) {
+            var slideshow = document.getElementById(slideshowId);
 
-        function openSlideshow(slideshowId) {
-            document.getElementById(slideshowId).classList.add('active');
-            document.body.style.overflow = 'hidden';
-            currentSlide[slideshowId] = 0;
-        }
+            if (!slideshow) return;
 
-        function closeSlideshow(slideshowId) {
-            document.getElementById(slideshowId).classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
+            var slides = slideshow.querySelectorAll(".slide");
 
-        function nextSlide(slideshowId) {
-            const slideshow = document.getElementById(slideshowId);
-            const slides = slideshow.querySelectorAll('.slide');
-            currentSlide[slideshowId] = (currentSlide[slideshowId] + 1) % slides.length;
+            if (!slides.length) return;
+
+            currentSlide[slideshowId] = ((currentSlide[slideshowId] || 0) + 1) % slides.length;
+
             updateSlide(slideshowId);
-        }
+        };
 
-        function prevSlide(slideshowId) {
-            const slideshow = document.getElementById(slideshowId);
-            const slides = slideshow.querySelectorAll('.slide');
-            currentSlide[slideshowId] = (currentSlide[slideshowId] - 1 + slides.length) % slides.length;
+        window.prevSlide = function (slideshowId) {
+            var slideshow = document.getElementById(slideshowId);
+
+            if (!slideshow) return;
+
+            var slides = slideshow.querySelectorAll(".slide");
+
+            if (!slides.length) return;
+
+            currentSlide[slideshowId] =
+                ((currentSlide[slideshowId] || 0) - 1 + slides.length) % slides.length;
+
             updateSlide(slideshowId);
-        }
+        };
 
-        function goToSlide(slideshowId, index) {
+        window.goToSlide = function (slideshowId, index) {
             currentSlide[slideshowId] = index;
             updateSlide(slideshowId);
-        }
+        };
 
         function updateSlide(slideshowId) {
-            const slideshow = document.getElementById(slideshowId);
-            const slides = slideshow.querySelectorAll('.slide');
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active', 'prev');
-                if (i === currentSlide[slideshowId]) {
-                    slide.classList.add('active');
-                } else if (i < currentSlide[slideshowId]) {
-                    slide.classList.add('prev');
+            var slideshow = document.getElementById(slideshowId);
+
+            if (!slideshow) return;
+
+            var slides = slideshow.querySelectorAll(".slide");
+            var dots = slideshow.querySelectorAll(".slide-dot");
+            var activeIndex = currentSlide[slideshowId] || 0;
+
+            slides.forEach(function (slide, index) {
+                slide.classList.remove("active", "prev");
+
+                if (index === activeIndex) {
+                    slide.classList.add("active");
+                } else if (index < activeIndex) {
+                    slide.classList.add("prev");
                 }
             });
 
-            slideshow.querySelectorAll('.slide-dot').forEach((dot, i) => {
-                dot.classList.toggle('active', i === currentSlide[slideshowId]);
+            dots.forEach(function (dot, index) {
+                dot.classList.toggle("active", index === activeIndex);
             });
         }
 
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            const active = document.querySelector('.modal-slideshow.active');
-            if (active) {
-                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide(active.id);
-                if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide(active.id);
-                if (e.key === 'Escape') closeSlideshow(active.id);
+        document.addEventListener("keydown", function (e) {
+            var activeSlideshow = document.querySelector(".modal-slideshow.active");
+
+            if (!activeSlideshow) return;
+
+            if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+                window.nextSlide(activeSlideshow.id);
+            }
+
+            if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+                window.prevSlide(activeSlideshow.id);
+            }
+
+            if (e.key === "Escape") {
+                window.closeSlideshow(activeSlideshow.id);
             }
         });
 
-        // Close on outside click
-        document.querySelectorAll('.modal-slideshow').forEach(slideshow => {
-            slideshow.addEventListener('click', (e) => {
-                if (e.target === slideshow) closeSlideshow(slideshow.id);
+        var slideshows = document.querySelectorAll(".modal-slideshow");
+
+        slideshows.forEach(function (slideshow) {
+            slideshow.addEventListener("click", function (e) {
+                if (e.target === slideshow) {
+                    window.closeSlideshow(slideshow.id);
+                }
             });
         });
-    </script>
+
+        /* ========== STACKED PROJECTS SECTION FIXED JS ========== */
+        var stackSection = document.querySelector("#projects");
+        var stackCards = document.querySelectorAll("#projects .stack-card");
+        var stackDots = document.querySelectorAll("#projects .stack-dot");
+        var ticking = false;
+
+        function clamp(value, min, max) {
+            return Math.min(Math.max(value, min), max);
+        }
+
+        function updateStackProjects() {
+            if (!stackSection || stackCards.length === 0) return;
+
+            var totalScrollable = stackSection.offsetHeight - window.innerHeight;
+
+            if (totalScrollable <= 0) return;
+
+            var passed = clamp(
+                window.scrollY - stackSection.offsetTop,
+                0,
+                totalScrollable
+            );
+
+            var progress = passed / totalScrollable;
+            var segments = stackCards.length - 1;
+            var exactStep = progress * segments;
+            var activeIndex = clamp(Math.round(exactStep), 0, stackCards.length - 1);
+
+            stackCards.forEach(function (card, index) {
+                var translateY = 0;
+                var scale = 1;
+                var brightness = 1;
+                var shadow = "0 30px 80px rgba(0,0,0,0.28)";
+
+                if (index > 0) {
+                    var start = index - 1;
+                    var localProgress = clamp(exactStep - start, 0, 1);
+
+                    translateY = (1 - localProgress) * 115;
+                }
+
+                if (index < exactStep) {
+                    var distanceBehind = exactStep - index;
+
+                    scale = 1 - Math.min(distanceBehind * 0.035, 0.07);
+                    brightness = 1 - Math.min(distanceBehind * 0.08, 0.14);
+                }
+
+                if (Math.abs(index - exactStep) < 0.6) {
+                    shadow = "0 45px 120px rgba(0,0,0,0.38)";
+                }
+
+                card.style.transform =
+                    "translate(-50%, -50%) translateY(" + translateY + "%) scale(" + scale + ")";
+
+                card.style.filter = "brightness(" + brightness + ")";
+                card.style.boxShadow = shadow;
+            });
+
+            stackDots.forEach(function (dot, index) {
+                dot.classList.toggle("active", index === activeIndex);
+            });
+        }
+
+        function requestStackUpdate() {
+            if (!ticking) {
+                window.requestAnimationFrame(function () {
+                    updateStackProjects();
+                    ticking = false;
+                });
+
+                ticking = true;
+            }
+        }
+
+        window.addEventListener("scroll", requestStackUpdate, { passive: true });
+        window.addEventListener("resize", requestStackUpdate);
+
+        updateStackProjects();
+    });
+})();
+</script>
 
 </body>
 </html>
