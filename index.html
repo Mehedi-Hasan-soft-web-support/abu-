@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1476,7 +1477,7 @@
                         I'm a passionate and results-driven mobile developer with expertise in Flutter and Dart, based in Dhaka, Bangladesh. With a strong foundation in Computer Science from Daffodil International University, I specialize in creating elegant, scalable, and high-performance cross-platform mobile applications. My approach combines cutting-edge technology with user-centric design principles to deliver exceptional digital experiences. I'm committed to continuous learning, staying ahead of industry trends, and solving complex problems with innovative solutions.
                     </p>
                     <div class="btn-group">
-                        <a href="#projects" class="btn-primary">View My Work</a>
+                        <a href="#project-index" class="btn-primary">View My Work</a>
                         <a href="#contact" class="btn-secondary">Get In Touch</a>
                         <a href="https://drive.google.com/file/d/11AbgQ0wZmzxOTrIYz09RtNNlNFKDcttH/view" 
                            target="_blank"
@@ -1572,6 +1573,213 @@
         </div>
     </section>
 
+
+
+
+<!-- PROJECT COLOR DIV JUMP SECTION -->
+<style>
+    #project-index {
+        padding: clamp(60px, 9vh, 110px) clamp(18px, 5vw, 40px);
+        background: linear-gradient(135deg, #050505 0%, #101027 100%);
+    }
+
+    #project-index .project-index-wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    #project-index .project-index-title {
+        font-family: 'Poppins', sans-serif;
+        font-size: clamp(2rem, 5vw, 4.5rem);
+        color: #ffffff;
+        line-height: 1;
+        margin-bottom: 35px;
+        letter-spacing: -2px;
+    }
+
+    #project-index .project-color-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(16px, 3vw, 28px);
+    }
+
+    #project-index .project-color-card {
+        min-height: 260px;
+        border-radius: 28px;
+        padding: 28px;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: 0.45s ease;
+        box-shadow: 0 25px 70px rgba(0,0,0,0.28);
+    }
+
+    #project-index .project-color-card::before {
+        content: "";
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        right: -80px;
+        top: -80px;
+        background: rgba(255,255,255,0.18);
+        transition: 0.45s ease;
+    }
+
+    #project-index .project-color-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.18), transparent 55%);
+        opacity: 0.8;
+        pointer-events: none;
+    }
+
+    #project-index .project-color-card:hover {
+        transform: translateY(-12px) scale(1.02);
+        box-shadow: 0 35px 90px rgba(0,0,0,0.38);
+    }
+
+    #project-index .project-color-card:hover::before {
+        transform: scale(1.35);
+    }
+
+    #project-index .project-blue {
+        background: linear-gradient(135deg, #0c28db, #07137a);
+    }
+
+    #project-index .project-red {
+        background: linear-gradient(135deg, #ef4444, #8f0000);
+    }
+
+    #project-index .project-green {
+        background: linear-gradient(135deg, #22c55e, #006b34);
+    }
+
+    #project-index .project-no,
+    #project-index .project-name,
+    #project-index .project-arrow {
+        position: relative;
+        z-index: 2;
+    }
+
+    #project-index .project-no {
+        color: rgba(255,255,255,0.72);
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: 3px;
+    }
+
+    #project-index .project-name {
+        font-family: 'Poppins', sans-serif;
+        color: #ffffff;
+        font-size: clamp(1.55rem, 3vw, 2.7rem);
+        line-height: 1.05;
+        font-weight: 900;
+        letter-spacing: -1.5px;
+        max-width: 320px;
+    }
+
+    #project-index .project-arrow {
+        color: #ffffff;
+        font-size: 34px;
+        align-self: flex-end;
+        transition: 0.35s ease;
+    }
+
+    #project-index .project-color-card:hover .project-arrow {
+        transform: translate(8px, -8px);
+    }
+
+    @media (max-width: 850px) {
+        #project-index .project-color-grid {
+            grid-template-columns: 1fr;
+        }
+
+        #project-index .project-color-card {
+            min-height: 190px;
+        }
+    }
+</style>
+
+<section id="project-index">
+    <div class="project-index-wrap">
+        <h2 class="project-index-title">Select Project</h2>
+
+        <div class="project-color-grid">
+            <a href="#projects" class="project-color-card project-blue" data-project-step="0">
+                <span class="project-no">01</span>
+                <strong class="project-name">Google Map App</strong>
+                <span class="project-arrow">↗</span>
+            </a>
+
+            <a href="#projects" class="project-color-card project-red" data-project-step="1">
+                <span class="project-no">02</span>
+                <strong class="project-name">Flutter Chatbot</strong>
+                <span class="project-arrow">↗</span>
+            </a>
+
+            <a href="#projects" class="project-color-card project-green" data-project-step="2">
+                <span class="project-no">03</span>
+                <strong class="project-name">E-Commerce App</strong>
+                <span class="project-arrow">↗</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<script>
+(function () {
+    function initProjectColorJump() {
+        var links = document.querySelectorAll("[data-project-step]");
+        var projectsSection = document.querySelector("#projects");
+        var projectCards = document.querySelectorAll("#projects .stack-card");
+
+        links.forEach(function (link) {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                if (!projectsSection) return;
+
+                var index = parseInt(this.getAttribute("data-project-step"), 10) || 0;
+                var totalScrollable = projectsSection.offsetHeight - window.innerHeight;
+                var totalSteps = Math.max(projectCards.length - 1, 1);
+                var progress = Math.min(Math.max(index / totalSteps, 0), 1);
+
+                var targetPosition = projectsSection.offsetTop + (totalScrollable * progress) + 4;
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: "smooth"
+                });
+            });
+        });
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initProjectColorJump);
+    } else {
+        initProjectColorJump();
+    }
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- STATISTICS SECTION -->
     <section id="statistics" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(236, 72, 153, 0.05));">
         <div class="container-custom">
@@ -1613,93 +1821,6 @@
             </div>
         </div>
     </section>
-
-    <!-- SKILLS SECTION -->
-    <section id="skills">
-        <div class="container-custom">
-            <h2 class="section-title">Technical <span class="gradient-text">Skills</span></h2>
-            <p class="section-subtitle">Technologies and tools I work with daily to build amazing applications</p>
-
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fas fa-leaf"></i></div>
-                    <h3>Dart</h3>
-                    <p>Advanced programming language expertise with 3+ years experience</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
-                    <h3>Flutter</h3>
-                    <p>Cross-platform mobile development for iOS and Android</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fas fa-database"></i></div>
-                    <h3>Firebase</h3>
-                    <p>Backend services, real-time database, and cloud functions</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fas fa-code"></i></div>
-                    <h3>REST APIs</h3>
-                    <p>API design, integration, and backend services management</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fas fa-palette"></i></div>
-                    <h3>UI/UX Design</h3>
-                    <p>Beautiful, intuitive interface design with user experience focus</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fas fa-project-diagram"></i></div>
-                    <h3>State Management</h3>
-                    <p>Provider, Riverpod, and advanced architectural patterns</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fas fa-code-branch"></i></div>
-                    <h3>Git & GitHub</h3>
-                    <p>Version control, collaboration, and deployment workflows</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fas fa-users"></i></div>
-                    <h3>Team Leadership</h3>
-                    <p>Mentoring, collaboration, and agile team management</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2218,23 +2339,30 @@
                         <div class="top-arrow">↗</div>
                         <h2 class="project-title">Google Map App for University Navigation</h2>
 
+                          
+
+
+                        
                         <p class="project-desc">
                             A Flutter-based Google Map project designed specially for my university,
                             including custom pointers, API integration, and vehicle parking location tracking.
                         </p>
+                   
 
                         <div class="mini-info">
+                                  
+
                             <div>
                                 <strong>Problem</strong>
-                                <p>I faced problems with API integration, SetController pointer setup, and showing my university area properly.</p>
+                                <p>During the development of this project, I faced several challenges, especially with API integration and managing map pointers using SetController in Google Maps. I also wanted to make the project more unique and useful for my university students.</p>
                             </div>
                             <div>
                                 <strong>Solution</strong>
-                                <p>After debugging, I solved the API and SetController issue, then added a unique university parking pointer feature.</p>
+                                <p>After spending a lot of time debugging, I discovered the API-related issue and successfully solved the SetController problem. To make the project unique, I added a special parking location feature where students can easily find their parked vehicles inside the university area.</p>
                             </div>
                             <div>
                                 <strong>Conclusion</strong>
-                                <p>This uniqueness makes the project stand out because it solves a real university parking and location problem.</p>
+                                <p>Overcoming these challenges helped improve my problem-solving skills. The unique parking feature and customized university map system make this project stand out from other Google Map projects.</p>
                             </div>
                         </div>
 
@@ -2331,15 +2459,15 @@
                         <div class="mini-info">
                             <div>
                                 <strong>Problem</strong>
-                                <p>I was confused about where Flutter should be integrated inside the chatbot project architecture.</p>
+                                <p>While developing the chatbot project, I faced difficulties understanding how to properly integrate Flutter with both the frontend and backend system. Managing the architecture of the project was also challenging at first.</p>
                             </div>
                             <div>
                                 <strong>Solution</strong>
-                                <p>I used Flutter for the admin panel and answer sheet, while Python works as the backend system.</p>
+                                <p>After researching and analyzing the project structure, I decided to use Python for the backend and Flutter for designing the admin panel and answer interface. This combination helped me create a smooth communication system between frontend and backend.</p>
                             </div>
                             <div>
                                 <strong>Conclusion</strong>
-                                <p>This created a modern layered architecture where frontend and backend meet smoothly.</p>
+                                <p>This project demonstrates a modern layered architecture where frontend and backend technologies work together efficiently. It improved my understanding of system integration and application development.</p>
                             </div>
                         </div>
 
@@ -2531,6 +2659,134 @@
         </div>
     </div>
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- SKILLS SECTION -->
+    <section id="skills">
+        <div class="container-custom">
+            <h2 class="section-title">Technical <span class="gradient-text">Skills</span></h2>
+            <p class="section-subtitle">Technologies and tools I work with daily to build amazing applications</p>
+
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-leaf"></i></div>
+                    <h3>Dart</h3>
+                    <p>Advanced programming language expertise with 3+ years experience</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Flutter</h3>
+                    <p>Cross-platform mobile development for iOS and Android</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-database"></i></div>
+                    <h3>Firebase</h3>
+                    <p>Backend services, real-time database, and cloud functions</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-code"></i></div>
+                    <h3>REST APIs</h3>
+                    <p>API design, integration, and backend services management</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-palette"></i></div>
+                    <h3>UI/UX Design</h3>
+                    <p>Beautiful, intuitive interface design with user experience focus</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-project-diagram"></i></div>
+                    <h3>State Management</h3>
+                    <p>Provider, Riverpod, and advanced architectural patterns</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-code-branch"></i></div>
+                    <h3>Git & GitHub</h3>
+                    <p>Version control, collaboration, and deployment workflows</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-users"></i></div>
+                    <h3>Team Leadership</h3>
+                    <p>Mentoring, collaboration, and agile team management</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
